@@ -27,8 +27,8 @@ const Footer = () => {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link to="/" className="flex items-center gap-2 mb-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground">
-                <Calculator className="h-5 w-5" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground pointer-events-none">
+                <Calculator className="h-5 w-5 pointer-events-none" />
               </div>
               <span className="text-xl font-bold text-foreground">
                 Calc<span className="text-primary">Hub</span>
@@ -41,7 +41,7 @@ const Footer = () => {
               href={`mailto:${content.footerEmail}`}
               className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
             >
-              <Mail className="h-4 w-4" />
+              <Mail className="h-4 w-4 pointer-events-none" />
               {content.footerEmail}
             </a>
           </div>
@@ -107,7 +107,7 @@ const Footer = () => {
             {content.footerTagline.includes('love') ? (
               <>
                 {content.footerTagline.split('love')[0]}
-                <Heart className="h-4 w-4 text-destructive fill-destructive" />
+                <Heart className="h-4 w-4 text-destructive fill-destructive pointer-events-none" />
                 {content.footerTagline.split('love')[1]}
               </>
             ) : (
