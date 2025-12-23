@@ -4,13 +4,18 @@ import SEO from '@/components/common/SEO';
 import CalculatorCard from '@/components/calculator/CalculatorCard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { calculators, categoryInfo, getFeaturedCalculators, getCalculatorsByCategory } from '@/lib/calculators';
+import { calculators, categoryInfo, getCalculatorById, getCalculatorsByCategory } from '@/lib/calculators';
 import { Calculator, ArrowRight, Zap, Shield, Clock } from 'lucide-react';
-import { useSiteContent } from '@/hooks/useSiteContent';
+import { useSiteContent, useFeaturedCalculators } from '@/hooks/useSiteContent';
 
 const Index = () => {
-  const featured = getFeaturedCalculators();
   const { content } = useSiteContent();
+  const { featuredIds } = useFeaturedCalculators();
+  
+  // Get featured calculators from database order
+  const featured = featuredIds
+    .map(id => getCalculatorById(id))
+    .filter(Boolean) as typeof calculators;
 
   const features = [
     { icon: Zap, title: content.feature1Title, desc: content.feature1Desc },

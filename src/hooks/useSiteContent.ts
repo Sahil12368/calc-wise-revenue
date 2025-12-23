@@ -32,6 +32,11 @@ export interface SiteContent {
   seoSiteTitle: string;
   seoSiteDescription: string;
   seoKeywords: string;
+  // Contact page
+  contactTitle: string;
+  contactFormTitle: string;
+  contactEmail: string;
+  contactLocation: string;
 }
 
 export const defaultContent: SiteContent = {
@@ -65,6 +70,11 @@ export const defaultContent: SiteContent = {
   seoSiteTitle: 'CalcHub',
   seoSiteDescription: 'Free online calculators for health, finance, education, and everyday needs.',
   seoKeywords: 'calculator, online calculator, free calculator, BMI calculator, EMI calculator, percentage calculator',
+  // Contact page
+  contactTitle: 'Contact Us',
+  contactFormTitle: 'Send a Message',
+  contactEmail: 'contact@calchub.com',
+  contactLocation: 'Available worldwide, online 24/7',
 };
 
 export const useSiteContent = () => {
@@ -100,4 +110,37 @@ export const useSiteContent = () => {
   }, []);
 
   return { content, loading };
+};
+
+export const useFeaturedCalculators = () => {
+  const [featuredIds, setFeaturedIds] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchFeatured = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('featured_calculators')
+          .select('calculator_id, display_order')
+          .order('display_order', { ascending: true });
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          setFeaturedIds(data.map(item => item.calculator_id));
+        } else {
+          setFeaturedIds(['mortgage', 'bmi', 'percentage', 'age']);
+        }
+      } catch (error) {
+        console.error('Error fetching featured calculators:', error);
+        setFeaturedIds(['mortgage', 'bmi', 'percentage', 'age']);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFeatured();
+  }, []);
+
+  return { featuredIds, loading };
 };
