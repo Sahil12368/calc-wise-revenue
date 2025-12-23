@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { logger } from '@/lib/logger';
 
 export interface SiteContent {
   // Homepage
@@ -100,7 +101,7 @@ export const useSiteContent = () => {
           setContent({ ...defaultContent, ...contentFromDb });
         }
       } catch (error) {
-        console.error('Error fetching site content:', error);
+        logger.error('Error fetching site content:', error);
       } finally {
         setLoading(false);
       }
@@ -132,7 +133,7 @@ export const useFeaturedCalculators = () => {
           setFeaturedIds(['mortgage', 'bmi', 'percentage', 'age']);
         }
       } catch (error) {
-        console.error('Error fetching featured calculators:', error);
+        logger.error('Error fetching featured calculators:', error);
         setFeaturedIds(['mortgage', 'bmi', 'percentage', 'age']);
       } finally {
         setLoading(false);

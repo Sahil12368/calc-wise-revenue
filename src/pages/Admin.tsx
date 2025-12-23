@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { SiteContent, defaultContent } from '@/hooks/useSiteContent';
 import { calculators } from '@/lib/calculators';
+import { logger } from '@/lib/logger';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -122,7 +123,7 @@ const Admin = () => {
         setFeaturedCalcs(data);
       }
     } catch (error) {
-      console.error('Error fetching featured calculators:', error);
+      logger.error('Error fetching featured calculators:', error);
     }
   };
 
@@ -146,7 +147,7 @@ const Admin = () => {
       
       toast.success('Featured calculators saved!');
     } catch (error) {
-      console.error('Error saving featured calculators:', error);
+      logger.error('Error saving featured calculators:', error);
       toast.error('Failed to save featured calculators');
     } finally {
       setSavingFeatured(false);
@@ -201,7 +202,7 @@ const Admin = () => {
         setContent({ ...defaultContent, ...contentFromDb });
       }
     } catch (error) {
-      console.error('Error fetching site content:', error);
+      logger.error('Error fetching site content:', error);
     }
   };
 
@@ -223,7 +224,7 @@ const Admin = () => {
       
       toast.success('Content saved successfully!');
     } catch (error) {
-      console.error('Error saving content:', error);
+      logger.error('Error saving content:', error);
       toast.error('Failed to save content');
     } finally {
       setSavingContent(false);
@@ -286,7 +287,7 @@ const Admin = () => {
 
       setTopPages(sortedPages);
     } catch (error) {
-      console.error('Error fetching analytics:', error);
+      logger.error('Error fetching analytics:', error);
     } finally {
       setLoadingData(false);
     }

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
+import { logger } from '@/lib/logger';
 
 const getVisitorId = (): string => {
   let visitorId = localStorage.getItem('visitor_id');
@@ -25,7 +26,7 @@ export const usePageTracking = () => {
         });
       } catch (error) {
         // Silently fail - don't break the app for tracking errors
-        console.error('Failed to track page visit:', error);
+        logger.error('Failed to track page visit:', error);
       }
     };
 
