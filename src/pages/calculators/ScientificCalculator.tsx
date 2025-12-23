@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import CalculatorLayout from '@/components/calculator/CalculatorLayout';
 import { getCalculatorById } from '@/lib/calculators';
+import { evaluate } from 'mathjs';
 
 const ScientificCalculator = () => {
   const calculator = getCalculatorById('scientific')!;
@@ -60,9 +61,11 @@ const ScientificCalculator = () => {
   const calculate = () => {
     try {
       const expression = equation + display;
+      // Replace display characters with math operators
       const sanitized = expression.replace(/×/g, '*').replace(/÷/g, '/').replace(/\s+/g, '');
-      const result = eval(sanitized);
-      setDisplay(result.toString());
+      // Use mathjs evaluate() instead of dangerous eval() - safe math expression parser
+      const result = evaluate(sanitized);
+      setDisplay(String(result));
       setEquation('');
       setIsNewNumber(true);
     } catch {
