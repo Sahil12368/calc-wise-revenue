@@ -12,26 +12,24 @@ import Terms from "./pages/Terms";
 import Disclaimer from "./pages/Disclaimer";
 import NotFound from "./pages/NotFound";
 
-// Calculator pages
+// Calculator pages - Math
 import PercentageCalculator from "./pages/calculators/PercentageCalculator";
-import AgeCalculator from "./pages/calculators/AgeCalculator";
-import DateDifferenceCalculator from "./pages/calculators/DateDifferenceCalculator";
 import AverageCalculator from "./pages/calculators/AverageCalculator";
 import RatioCalculator from "./pages/calculators/RatioCalculator";
+import ScientificCalculator from "./pages/calculators/ScientificCalculator";
+import FractionCalculator from "./pages/calculators/FractionCalculator";
+import RandomNumberCalculator from "./pages/calculators/RandomNumberCalculator";
+import TriangleCalculator from "./pages/calculators/TriangleCalculator";
+import StandardDeviationCalculator from "./pages/calculators/StandardDeviationCalculator";
+
+// Calculator pages - Health
 import BMICalculator from "./pages/calculators/BMICalculator";
 import BMRCalculator from "./pages/calculators/BMRCalculator";
 import CalorieCalculator from "./pages/calculators/CalorieCalculator";
 import IdealWeightCalculator from "./pages/calculators/IdealWeightCalculator";
-import EMICalculator from "./pages/calculators/EMICalculator";
-import SimpleInterestCalculator from "./pages/calculators/SimpleInterestCalculator";
-import CompoundInterestCalculator from "./pages/calculators/CompoundInterestCalculator";
-import SavingsGoalCalculator from "./pages/calculators/SavingsGoalCalculator";
-import PercentageToCGPACalculator from "./pages/calculators/PercentageToCGPACalculator";
-import CGPAToPercentageCalculator from "./pages/calculators/CGPAToPercentageCalculator";
-import MarksCalculator from "./pages/calculators/MarksCalculator";
-import AttendanceCalculator from "./pages/calculators/AttendanceCalculator";
+import BodyFatCalculator from "./pages/calculators/BodyFatCalculator";
 
-// New Financial Calculators
+// Calculator pages - Finance
 import MortgageCalculator from "./pages/calculators/MortgageCalculator";
 import LoanCalculator from "./pages/calculators/LoanCalculator";
 import AutoLoanCalculator from "./pages/calculators/AutoLoanCalculator";
@@ -43,9 +41,30 @@ import InvestmentCalculator from "./pages/calculators/InvestmentCalculator";
 import InflationCalculator from "./pages/calculators/InflationCalculator";
 import FinanceCalculator from "./pages/calculators/FinanceCalculator";
 import IncomeTaxCalculator from "./pages/calculators/IncomeTaxCalculator";
+import CompoundInterestCalculator from "./pages/calculators/CompoundInterestCalculator";
 import SalaryCalculator from "./pages/calculators/SalaryCalculator";
 import InterestRateCalculator from "./pages/calculators/InterestRateCalculator";
 import SalesTaxCalculator from "./pages/calculators/SalesTaxCalculator";
+import SimpleInterestCalculator from "./pages/calculators/SimpleInterestCalculator";
+import EMICalculator from "./pages/calculators/EMICalculator";
+import SavingsGoalCalculator from "./pages/calculators/SavingsGoalCalculator";
+
+// Calculator pages - Other
+import AgeCalculator from "./pages/calculators/AgeCalculator";
+import DateDifferenceCalculator from "./pages/calculators/DateDifferenceCalculator";
+import DateCalculator from "./pages/calculators/DateCalculator";
+import TimeCalculator from "./pages/calculators/TimeCalculator";
+import HoursCalculator from "./pages/calculators/HoursCalculator";
+import GPACalculator from "./pages/calculators/GPACalculator";
+import GradeCalculator from "./pages/calculators/GradeCalculator";
+import ConcreteCalculator from "./pages/calculators/ConcreteCalculator";
+import SubnetCalculator from "./pages/calculators/SubnetCalculator";
+import PasswordGeneratorCalculator from "./pages/calculators/PasswordGeneratorCalculator";
+import ConversionCalculator from "./pages/calculators/ConversionCalculator";
+import PercentageToCGPACalculator from "./pages/calculators/PercentageToCGPACalculator";
+import CGPAToPercentageCalculator from "./pages/calculators/CGPAToPercentageCalculator";
+import MarksCalculator from "./pages/calculators/MarksCalculator";
+import AttendanceCalculator from "./pages/calculators/AttendanceCalculator";
 
 const queryClient = new QueryClient();
 
@@ -68,12 +87,18 @@ const App = () => (
           <Route path="/calculator/percentage" element={<PercentageCalculator />} />
           <Route path="/calculator/average" element={<AverageCalculator />} />
           <Route path="/calculator/ratio" element={<RatioCalculator />} />
+          <Route path="/calculator/scientific" element={<ScientificCalculator />} />
+          <Route path="/calculator/fraction" element={<FractionCalculator />} />
+          <Route path="/calculator/random-number" element={<RandomNumberCalculator />} />
+          <Route path="/calculator/triangle" element={<TriangleCalculator />} />
+          <Route path="/calculator/standard-deviation" element={<StandardDeviationCalculator />} />
           
           {/* Health Calculators */}
           <Route path="/calculator/bmi" element={<BMICalculator />} />
           <Route path="/calculator/bmr" element={<BMRCalculator />} />
           <Route path="/calculator/calorie" element={<CalorieCalculator />} />
           <Route path="/calculator/ideal-weight" element={<IdealWeightCalculator />} />
+          <Route path="/calculator/body-fat" element={<BodyFatCalculator />} />
           
           {/* Finance Calculators */}
           <Route path="/calculator/mortgage" element={<MortgageCalculator />} />
@@ -98,6 +123,15 @@ const App = () => (
           {/* Other Calculators */}
           <Route path="/calculator/age" element={<AgeCalculator />} />
           <Route path="/calculator/date-difference" element={<DateDifferenceCalculator />} />
+          <Route path="/calculator/date" element={<DateCalculator />} />
+          <Route path="/calculator/time" element={<TimeCalculator />} />
+          <Route path="/calculator/hours" element={<HoursCalculator />} />
+          <Route path="/calculator/gpa" element={<GPACalculator />} />
+          <Route path="/calculator/grade" element={<GradeCalculator />} />
+          <Route path="/calculator/concrete" element={<ConcreteCalculator />} />
+          <Route path="/calculator/subnet" element={<SubnetCalculator />} />
+          <Route path="/calculator/password-generator" element={<PasswordGeneratorCalculator />} />
+          <Route path="/calculator/conversion" element={<ConversionCalculator />} />
           <Route path="/calculator/percentage-to-cgpa" element={<PercentageToCGPACalculator />} />
           <Route path="/calculator/cgpa-to-percentage" element={<CGPAToPercentageCalculator />} />
           <Route path="/calculator/marks" element={<MarksCalculator />} />
