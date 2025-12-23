@@ -1,4 +1,3 @@
-import { forwardRef } from 'react';
 import { cn } from '@/lib/utils';
 
 interface AdPlacementProps {
@@ -14,12 +13,11 @@ const adSizes: Record<AdPlacementProps['type'], { width: string; height: string;
   'below-calculator': { width: 'w-full max-w-[728px]', height: 'h-[90px]', label: 'Below Calculator Ad' },
 };
 
-const AdPlacement = forwardRef<HTMLDivElement, AdPlacementProps>(({ type, className }, ref) => {
+const AdPlacement = ({ type, className }: AdPlacementProps) => {
   const size = adSizes[type];
 
   return (
     <div
-      ref={ref}
       className={cn(
         'mx-auto my-4',
         type === 'sidebar' && 'sticky top-20',
@@ -37,8 +35,6 @@ const AdPlacement = forwardRef<HTMLDivElement, AdPlacementProps>(({ type, classN
       </div>
     </div>
   );
-});
-
-AdPlacement.displayName = 'AdPlacement';
+};
 
 export default AdPlacement;
