@@ -58,8 +58,8 @@ const Navbar = () => {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground transition-transform group-hover:scale-105">
-              <Calculator className="h-5 w-5" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-primary-foreground transition-transform group-hover:scale-105 pointer-events-none">
+              <Calculator className="h-5 w-5 pointer-events-none" />
             </div>
             <span className="text-xl font-bold text-foreground">
               Calc<span className="text-primary">Hub</span>
