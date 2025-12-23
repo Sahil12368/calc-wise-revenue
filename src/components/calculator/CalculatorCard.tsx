@@ -57,8 +57,8 @@ const CalculatorCard = ({ calculator }: CalculatorCardProps) => {
       <Card className="h-full card-interactive group cursor-pointer">
         <CardContent className="p-6">
           <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-              <Icon className="h-6 w-6 text-primary group-hover:text-primary-foreground transition-colors" />
+            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-colors pointer-events-none">
+              <Icon className="h-6 w-6 text-primary group-hover:text-primary-foreground transition-colors pointer-events-none" />
             </div>
             <div className="flex-1 min-w-0">
               <h3 className="font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">
