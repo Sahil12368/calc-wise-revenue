@@ -75,7 +75,7 @@ const ConcreteCalculator = () => {
       description="Calculate concrete volume needed for slabs, columns, and stairs projects."
       intro="Estimate how much concrete you need for your project. Get results in cubic yards and number of bags."
       formula="Slab: Volume = Length × Width × Depth | Column: Volume = π × (Diameter/2)² × Height"
-      example="10' × 10' slab at 4\" thick = 1.23 cubic yards = 28 bags (80lb)"
+      example="10ft x 10ft slab at 4 inches thick = 1.23 cubic yards = 28 bags (80lb)"
       faqs={[
         { question: 'How much extra should I order?', answer: 'Order 5-10% extra to account for spillage, uneven ground, and waste.' },
         { question: 'What is a cubic yard?', answer: 'A cubic yard is 27 cubic feet (3×3×3 feet). Most concrete is sold by the cubic yard.' },

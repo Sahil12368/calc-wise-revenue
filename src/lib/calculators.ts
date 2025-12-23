@@ -248,42 +248,6 @@ export const calculators: Calculator[] = [
     path: '/calculator/ideal-weight',
     keywords: ['ideal weight', 'healthy weight', 'target weight'],
   },
-  {
-    id: 'pace',
-    name: 'Pace Calculator',
-    description: 'Calculate running or walking pace',
-    category: 'health',
-    icon: 'Timer',
-    path: '/calculator/pace',
-    keywords: ['pace', 'running', 'walking', 'speed'],
-  },
-  {
-    id: 'pregnancy',
-    name: 'Pregnancy Calculator',
-    description: 'Track pregnancy weeks and milestones',
-    category: 'health',
-    icon: 'Baby',
-    path: '/calculator/pregnancy',
-    keywords: ['pregnancy', 'weeks', 'trimester', 'baby'],
-  },
-  {
-    id: 'pregnancy-conception',
-    name: 'Pregnancy Conception Calculator',
-    description: 'Estimate conception date based on due date',
-    category: 'health',
-    icon: 'Heart',
-    path: '/calculator/pregnancy-conception',
-    keywords: ['conception', 'pregnancy', 'ovulation'],
-  },
-  {
-    id: 'due-date',
-    name: 'Due Date Calculator',
-    description: 'Calculate expected due date for pregnancy',
-    category: 'health',
-    icon: 'Calendar',
-    path: '/calculator/due-date',
-    keywords: ['due date', 'pregnancy', 'delivery date'],
-  },
 
   // Math Calculators
   {
