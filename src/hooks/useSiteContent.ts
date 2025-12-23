@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
 export interface SiteContent {
+  // Homepage
   heroTitle: string;
   heroSubtitle: string;
   heroBadge: string;
@@ -13,9 +14,28 @@ export interface SiteContent {
   feature3Desc: string;
   ctaTitle: string;
   ctaDescription: string;
+  // About page
+  aboutTitle: string;
+  aboutIntro: string;
+  aboutMissionTitle: string;
+  aboutMissionText: string;
+  aboutOfferTitle: string;
+  aboutOfferText: string;
+  aboutPromiseTitle: string;
+  aboutPromiseText: string;
+  // Footer
+  footerDescription: string;
+  footerEmail: string;
+  footerCopyright: string;
+  footerTagline: string;
+  // SEO
+  seoSiteTitle: string;
+  seoSiteDescription: string;
+  seoKeywords: string;
 }
 
-const defaultContent: SiteContent = {
+export const defaultContent: SiteContent = {
+  // Homepage
   heroTitle: 'Free Online Calculators',
   heroSubtitle: 'Quick, accurate, and easy-to-use calculators for health, finance, education, and everyday needs.',
   heroBadge: '100% Free • No Sign-up Required',
@@ -27,6 +47,24 @@ const defaultContent: SiteContent = {
   feature3Desc: 'No sign-up, no limits, no hidden fees',
   ctaTitle: 'Ready to Calculate?',
   ctaDescription: 'Explore our complete collection of free calculators.',
+  // About page
+  aboutTitle: 'About CalcHub',
+  aboutIntro: 'CalcHub provides free, accurate, and easy-to-use online calculators for everyone.',
+  aboutMissionTitle: 'Our Mission',
+  aboutMissionText: 'To make calculations simple and accessible for students, professionals, and everyday users worldwide.',
+  aboutOfferTitle: 'What We Offer',
+  aboutOfferText: 'Health & Fitness calculators (BMI, BMR, Calories), Finance calculators (EMI, Interest, Savings), Education calculators (CGPA, Marks, Attendance), Daily calculators (Percentage, Age, Date)',
+  aboutPromiseTitle: 'Our Promise',
+  aboutPromiseText: 'All calculators are 100% free, require no sign-up, and respect your privacy. Calculations happen entirely in your browser.',
+  // Footer
+  footerDescription: 'Free online calculators for all your daily, health, finance, and education needs. Quick, accurate, and easy to use.',
+  footerEmail: 'contact@calchub.com',
+  footerCopyright: 'CalcHub. All rights reserved.',
+  footerTagline: 'Made with love for everyone',
+  // SEO
+  seoSiteTitle: 'CalcHub',
+  seoSiteDescription: 'Free online calculators for health, finance, education, and everyday needs.',
+  seoKeywords: 'calculator, online calculator, free calculator, BMI calculator, EMI calculator, percentage calculator',
 };
 
 export const useSiteContent = () => {
