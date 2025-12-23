@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, forwardRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Cookie, X } from 'lucide-react';
 
-const CookieConsent = () => {
+const CookieConsent = forwardRef<HTMLDivElement>((_, ref) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -28,10 +28,10 @@ const CookieConsent = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="cookie-banner animate-slide-up">
+    <div ref={ref} className="cookie-banner animate-slide-up">
       <div className="flex items-start gap-3">
-        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-          <Cookie className="h-5 w-5 text-primary" />
+        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center pointer-events-none">
+          <Cookie className="h-5 w-5 text-primary pointer-events-none" />
         </div>
         <div className="flex-1">
           <h4 className="font-semibold text-foreground mb-1">Cookie Notice</h4>
@@ -57,11 +57,13 @@ const CookieConsent = () => {
           className="text-muted-foreground hover:text-foreground transition-colors"
           aria-label="Close"
         >
-          <X className="h-5 w-5" />
+          <X className="h-5 w-5 pointer-events-none" />
         </button>
       </div>
     </div>
   );
-};
+});
+
+CookieConsent.displayName = 'CookieConsent';
 
 export default CookieConsent;
