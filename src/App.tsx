@@ -31,6 +31,22 @@ import CGPAToPercentageCalculator from "./pages/calculators/CGPAToPercentageCalc
 import MarksCalculator from "./pages/calculators/MarksCalculator";
 import AttendanceCalculator from "./pages/calculators/AttendanceCalculator";
 
+// New Financial Calculators
+import MortgageCalculator from "./pages/calculators/MortgageCalculator";
+import LoanCalculator from "./pages/calculators/LoanCalculator";
+import AutoLoanCalculator from "./pages/calculators/AutoLoanCalculator";
+import InterestCalculator from "./pages/calculators/InterestCalculator";
+import PaymentCalculator from "./pages/calculators/PaymentCalculator";
+import RetirementCalculator from "./pages/calculators/RetirementCalculator";
+import AmortizationCalculator from "./pages/calculators/AmortizationCalculator";
+import InvestmentCalculator from "./pages/calculators/InvestmentCalculator";
+import InflationCalculator from "./pages/calculators/InflationCalculator";
+import FinanceCalculator from "./pages/calculators/FinanceCalculator";
+import IncomeTaxCalculator from "./pages/calculators/IncomeTaxCalculator";
+import SalaryCalculator from "./pages/calculators/SalaryCalculator";
+import InterestRateCalculator from "./pages/calculators/InterestRateCalculator";
+import SalesTaxCalculator from "./pages/calculators/SalesTaxCalculator";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -48,20 +64,40 @@ const App = () => (
           <Route path="/terms" element={<Terms />} />
           <Route path="/disclaimer" element={<Disclaimer />} />
           
-          {/* Calculator routes */}
+          {/* Math Calculators */}
           <Route path="/calculator/percentage" element={<PercentageCalculator />} />
-          <Route path="/calculator/age" element={<AgeCalculator />} />
-          <Route path="/calculator/date-difference" element={<DateDifferenceCalculator />} />
           <Route path="/calculator/average" element={<AverageCalculator />} />
           <Route path="/calculator/ratio" element={<RatioCalculator />} />
+          
+          {/* Health Calculators */}
           <Route path="/calculator/bmi" element={<BMICalculator />} />
           <Route path="/calculator/bmr" element={<BMRCalculator />} />
           <Route path="/calculator/calorie" element={<CalorieCalculator />} />
           <Route path="/calculator/ideal-weight" element={<IdealWeightCalculator />} />
-          <Route path="/calculator/emi" element={<EMICalculator />} />
-          <Route path="/calculator/simple-interest" element={<SimpleInterestCalculator />} />
+          
+          {/* Finance Calculators */}
+          <Route path="/calculator/mortgage" element={<MortgageCalculator />} />
+          <Route path="/calculator/loan" element={<LoanCalculator />} />
+          <Route path="/calculator/auto-loan" element={<AutoLoanCalculator />} />
+          <Route path="/calculator/interest" element={<InterestCalculator />} />
+          <Route path="/calculator/payment" element={<PaymentCalculator />} />
+          <Route path="/calculator/retirement" element={<RetirementCalculator />} />
+          <Route path="/calculator/amortization" element={<AmortizationCalculator />} />
+          <Route path="/calculator/investment" element={<InvestmentCalculator />} />
+          <Route path="/calculator/inflation" element={<InflationCalculator />} />
+          <Route path="/calculator/finance" element={<FinanceCalculator />} />
+          <Route path="/calculator/income-tax" element={<IncomeTaxCalculator />} />
           <Route path="/calculator/compound-interest" element={<CompoundInterestCalculator />} />
+          <Route path="/calculator/salary" element={<SalaryCalculator />} />
+          <Route path="/calculator/interest-rate" element={<InterestRateCalculator />} />
+          <Route path="/calculator/sales-tax" element={<SalesTaxCalculator />} />
+          <Route path="/calculator/simple-interest" element={<SimpleInterestCalculator />} />
+          <Route path="/calculator/emi" element={<EMICalculator />} />
           <Route path="/calculator/savings-goal" element={<SavingsGoalCalculator />} />
+          
+          {/* Other Calculators */}
+          <Route path="/calculator/age" element={<AgeCalculator />} />
+          <Route path="/calculator/date-difference" element={<DateDifferenceCalculator />} />
           <Route path="/calculator/percentage-to-cgpa" element={<PercentageToCGPACalculator />} />
           <Route path="/calculator/cgpa-to-percentage" element={<CGPAToPercentageCalculator />} />
           <Route path="/calculator/marks" element={<MarksCalculator />} />
