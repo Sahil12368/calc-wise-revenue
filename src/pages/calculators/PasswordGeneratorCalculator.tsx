@@ -33,8 +33,10 @@ const PasswordGeneratorCalculator = () => {
 
     const len = parseInt(length) || 16;
     let result = '';
+    // Use cryptographically secure random number generation
+    const randomValues = crypto.getRandomValues(new Uint32Array(len));
     for (let i = 0; i < len; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
+      result += chars.charAt(randomValues[i] % chars.length);
     }
 
     setPassword(result);
