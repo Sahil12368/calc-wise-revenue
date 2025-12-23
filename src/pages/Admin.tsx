@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { SiteContent, defaultContent } from '@/hooks/useSiteContent';
+import { calculators } from '@/lib/calculators';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Table,
   TableBody,
@@ -43,7 +45,12 @@ import {
   BarChart3,
   Info,
   Globe,
-  Search
+  Search,
+  Star,
+  GripVertical,
+  Phone,
+  ArrowUp,
+  ArrowDown
 } from 'lucide-react';
 import { format, subDays, startOfDay, endOfDay } from 'date-fns';
 import { toast } from 'sonner';
@@ -67,6 +74,11 @@ interface TopPage {
   visits: number;
 }
 
+interface FeaturedCalculator {
+  calculator_id: string;
+  display_order: number;
+}
+
 const Admin = () => {
   const navigate = useNavigate();
   const { user, loading, isAdmin, signOut } = useAuth();
@@ -80,6 +92,8 @@ const Admin = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [content, setContent] = useState<SiteContent>(defaultContent);
   const [savingContent, setSavingContent] = useState(false);
+  const [featuredCalcs, setFeaturedCalcs] = useState<FeaturedCalculator[]>([]);
+  const [savingFeatured, setSavingFeatured] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -91,8 +105,83 @@ const Admin = () => {
     if (user && isAdmin) {
       fetchAnalytics();
       fetchSiteContent();
+      fetchFeaturedCalculators();
     }
   }, [user, isAdmin]);
+
+  const fetchFeaturedCalculators = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('featured_calculators')
+        .select('calculator_id, display_order')
+        .order('display_order', { ascending: true });
+
+      if (error) throw error;
+
+      if (data) {
+        setFeaturedCalcs(data);
+      }
+    } catch (error) {
+      console.error('Error fetching featured calculators:', error);
+    }
+  };
+
+  const saveFeaturedCalculators = async () => {
+    setSavingFeatured(true);
+    try {
+      // Delete all existing
+      await supabase.from('featured_calculators').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+      
+      // Insert new ones
+      if (featuredCalcs.length > 0) {
+        const { error } = await supabase
+          .from('featured_calculators')
+          .insert(featuredCalcs.map((fc, index) => ({
+            calculator_id: fc.calculator_id,
+            display_order: index + 1
+          })));
+        
+        if (error) throw error;
+      }
+      
+      toast.success('Featured calculators saved!');
+    } catch (error) {
+      console.error('Error saving featured calculators:', error);
+      toast.error('Failed to save featured calculators');
+    } finally {
+      setSavingFeatured(false);
+    }
+  };
+
+  const toggleFeatured = (calculatorId: string) => {
+    const exists = featuredCalcs.find(fc => fc.calculator_id === calculatorId);
+    if (exists) {
+      setFeaturedCalcs(featuredCalcs.filter(fc => fc.calculator_id !== calculatorId));
+    } else {
+      setFeaturedCalcs([...featuredCalcs, { 
+        calculator_id: calculatorId, 
+        display_order: featuredCalcs.length + 1 
+      }]);
+    }
+  };
+
+  const moveUp = (calculatorId: string) => {
+    const index = featuredCalcs.findIndex(fc => fc.calculator_id === calculatorId);
+    if (index > 0) {
+      const newList = [...featuredCalcs];
+      [newList[index - 1], newList[index]] = [newList[index], newList[index - 1]];
+      setFeaturedCalcs(newList);
+    }
+  };
+
+  const moveDown = (calculatorId: string) => {
+    const index = featuredCalcs.findIndex(fc => fc.calculator_id === calculatorId);
+    if (index < featuredCalcs.length - 1) {
+      const newList = [...featuredCalcs];
+      [newList[index], newList[index + 1]] = [newList[index + 1], newList[index]];
+      setFeaturedCalcs(newList);
+    }
+  };
 
   const fetchSiteContent = async () => {
     try {
@@ -285,7 +374,7 @@ const Admin = () => {
           </div>
         ) : (
           <Tabs defaultValue="analytics" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 lg:w-auto lg:inline-grid">
+            <TabsList className="grid w-full grid-cols-3 lg:grid-cols-7 lg:w-auto lg:inline-grid">
               <TabsTrigger value="analytics" className="flex items-center gap-2">
                 <BarChart3 className="h-4 w-4" />
                 <span className="hidden sm:inline">Analytics</span>
@@ -294,9 +383,17 @@ const Admin = () => {
                 <FileText className="h-4 w-4" />
                 <span className="hidden sm:inline">Homepage</span>
               </TabsTrigger>
+              <TabsTrigger value="featured" className="flex items-center gap-2">
+                <Star className="h-4 w-4" />
+                <span className="hidden sm:inline">Featured</span>
+              </TabsTrigger>
               <TabsTrigger value="about" className="flex items-center gap-2">
                 <Info className="h-4 w-4" />
                 <span className="hidden sm:inline">About</span>
+              </TabsTrigger>
+              <TabsTrigger value="contact" className="flex items-center gap-2">
+                <Phone className="h-4 w-4" />
+                <span className="hidden sm:inline">Contact</span>
               </TabsTrigger>
               <TabsTrigger value="footer" className="flex items-center gap-2">
                 <Globe className="h-4 w-4" />
@@ -618,6 +715,111 @@ const Admin = () => {
               </Card>
             </TabsContent>
 
+            {/* Featured Calculators Tab */}
+            <TabsContent value="featured" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Star className="h-5 w-5" />
+                    Featured Calculators
+                  </CardTitle>
+                  <CardDescription>
+                    Select and reorder calculators to feature on the homepage
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {/* Selected Featured */}
+                  <div className="space-y-4">
+                    <h3 className="font-semibold text-lg border-b pb-2">
+                      Currently Featured ({featuredCalcs.length})
+                    </h3>
+                    {featuredCalcs.length === 0 ? (
+                      <p className="text-muted-foreground text-sm py-4">
+                        No calculators selected. Check calculators below to feature them.
+                      </p>
+                    ) : (
+                      <div className="space-y-2">
+                        {featuredCalcs.map((fc, index) => {
+                          const calc = calculators.find(c => c.id === fc.calculator_id);
+                          if (!calc) return null;
+                          return (
+                            <div 
+                              key={fc.calculator_id} 
+                              className="flex items-center justify-between p-3 border rounded-lg bg-secondary/30"
+                            >
+                              <div className="flex items-center gap-3">
+                                <GripVertical className="h-4 w-4 text-muted-foreground" />
+                                <span className="font-medium">{index + 1}. {calc.name}</span>
+                                <span className="text-xs text-muted-foreground">({calc.category})</span>
+                              </div>
+                              <div className="flex items-center gap-1">
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm" 
+                                  onClick={() => moveUp(fc.calculator_id)}
+                                  disabled={index === 0}
+                                >
+                                  <ArrowUp className="h-4 w-4" />
+                                </Button>
+                                <Button 
+                                  variant="ghost" 
+                                  size="sm" 
+                                  onClick={() => moveDown(fc.calculator_id)}
+                                  disabled={index === featuredCalcs.length - 1}
+                                >
+                                  <ArrowDown className="h-4 w-4" />
+                                </Button>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* All Calculators */}
+                  <div className="space-y-4">
+                    <h3 className="font-semibold text-lg border-b pb-2">All Calculators</h3>
+                    <div className="grid gap-2 max-h-[400px] overflow-y-auto">
+                      {calculators.map((calc) => {
+                        const isFeatured = featuredCalcs.some(fc => fc.calculator_id === calc.id);
+                        return (
+                          <div 
+                            key={calc.id} 
+                            className="flex items-center gap-3 p-2 hover:bg-secondary/30 rounded-lg"
+                          >
+                            <Checkbox
+                              id={calc.id}
+                              checked={isFeatured}
+                              onCheckedChange={() => toggleFeatured(calc.id)}
+                            />
+                            <label 
+                              htmlFor={calc.id} 
+                              className="flex-1 cursor-pointer text-sm"
+                            >
+                              <span className="font-medium">{calc.name}</span>
+                              <span className="text-muted-foreground ml-2">({calc.category})</span>
+                            </label>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end pt-4 border-t">
+                    <Button onClick={saveFeaturedCalculators} disabled={savingFeatured} className="calc-btn">
+                      {savingFeatured ? (
+                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      ) : (
+                        <Save className="h-4 w-4 mr-2" />
+                      )}
+                      Save Featured
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
             {/* About Page Content Tab */}
             <TabsContent value="about" className="space-y-6">
               <Card>
@@ -725,6 +927,73 @@ const Admin = () => {
                           rows={3}
                         />
                       </div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end pt-4 border-t">
+                    <Button onClick={saveSiteContent} disabled={savingContent} className="calc-btn">
+                      {savingContent ? (
+                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      ) : (
+                        <Save className="h-4 w-4 mr-2" />
+                      )}
+                      Save Changes
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Contact Page Content Tab */}
+            <TabsContent value="contact" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Phone className="h-5 w-5" />
+                    Contact Page Content
+                  </CardTitle>
+                  <CardDescription>
+                    Edit the content displayed on your Contact page
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="grid gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="contactTitle">Page Title</Label>
+                      <Input
+                        id="contactTitle"
+                        value={content.contactTitle}
+                        onChange={(e) => updateContent('contactTitle', e.target.value)}
+                        placeholder="Contact Us"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="contactFormTitle">Form Title</Label>
+                      <Input
+                        id="contactFormTitle"
+                        value={content.contactFormTitle}
+                        onChange={(e) => updateContent('contactFormTitle', e.target.value)}
+                        placeholder="Send a Message"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="contactEmail">Contact Email</Label>
+                      <Input
+                        id="contactEmail"
+                        type="email"
+                        value={content.contactEmail}
+                        onChange={(e) => updateContent('contactEmail', e.target.value)}
+                        placeholder="contact@calchub.com"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="contactLocation">Location Text</Label>
+                      <Input
+                        id="contactLocation"
+                        value={content.contactLocation}
+                        onChange={(e) => updateContent('contactLocation', e.target.value)}
+                        placeholder="Available worldwide, online 24/7"
+                      />
                     </div>
                   </div>
 
