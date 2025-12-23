@@ -98,8 +98,8 @@ const Index = () => {
               <Link key={key} to={`/calculators?category=${key}`}>
                 <Card className="h-full card-interactive">
                   <CardContent className="p-6 text-center">
-                    <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                      <Calculator className="h-8 w-8 text-primary" />
+                    <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4 pointer-events-none">
+                      <Calculator className="h-8 w-8 text-primary pointer-events-none" />
                     </div>
                     <h3 className="font-semibold text-foreground mb-2">{info.name}</h3>
                     <p className="text-sm text-muted-foreground mb-3">{info.description}</p>
