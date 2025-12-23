@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
+import { SiteContent, defaultContent } from '@/hooks/useSiteContent';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -39,7 +40,10 @@ import {
   Save,
   FileText,
   Settings,
-  BarChart3
+  BarChart3,
+  Info,
+  Globe,
+  Search
 } from 'lucide-react';
 import { format, subDays, startOfDay, endOfDay } from 'date-fns';
 import { toast } from 'sonner';
@@ -62,34 +66,6 @@ interface TopPage {
   path: string;
   visits: number;
 }
-
-interface SiteContent {
-  heroTitle: string;
-  heroSubtitle: string;
-  heroBadge: string;
-  feature1Title: string;
-  feature1Desc: string;
-  feature2Title: string;
-  feature2Desc: string;
-  feature3Title: string;
-  feature3Desc: string;
-  ctaTitle: string;
-  ctaDescription: string;
-}
-
-const defaultContent: SiteContent = {
-  heroTitle: 'Free Online Calculators',
-  heroSubtitle: 'Quick, accurate, and easy-to-use calculators for health, finance, education, and everyday needs.',
-  heroBadge: '100% Free • No Sign-up Required',
-  feature1Title: 'Instant Results',
-  feature1Desc: 'Get answers in milliseconds with no page reloads',
-  feature2Title: 'Privacy First',
-  feature2Desc: 'All calculations happen in your browser',
-  feature3Title: 'Always Free',
-  feature3Desc: 'No sign-up, no limits, no hidden fees',
-  ctaTitle: 'Ready to Calculate?',
-  ctaDescription: 'Explore our complete collection of free calculators.',
-};
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -309,14 +285,26 @@ const Admin = () => {
           </div>
         ) : (
           <Tabs defaultValue="analytics" className="space-y-6">
-            <TabsList className="grid w-full grid-cols-2 lg:w-auto lg:inline-grid">
+            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 lg:w-auto lg:inline-grid">
               <TabsTrigger value="analytics" className="flex items-center gap-2">
                 <BarChart3 className="h-4 w-4" />
-                Analytics
+                <span className="hidden sm:inline">Analytics</span>
               </TabsTrigger>
-              <TabsTrigger value="content" className="flex items-center gap-2">
+              <TabsTrigger value="homepage" className="flex items-center gap-2">
                 <FileText className="h-4 w-4" />
-                Content
+                <span className="hidden sm:inline">Homepage</span>
+              </TabsTrigger>
+              <TabsTrigger value="about" className="flex items-center gap-2">
+                <Info className="h-4 w-4" />
+                <span className="hidden sm:inline">About</span>
+              </TabsTrigger>
+              <TabsTrigger value="footer" className="flex items-center gap-2">
+                <Globe className="h-4 w-4" />
+                <span className="hidden sm:inline">Footer</span>
+              </TabsTrigger>
+              <TabsTrigger value="seo" className="flex items-center gap-2">
+                <Search className="h-4 w-4" />
+                <span className="hidden sm:inline">SEO</span>
               </TabsTrigger>
             </TabsList>
 
@@ -493,8 +481,8 @@ const Admin = () => {
               </div>
             </TabsContent>
 
-            {/* Content Management Tab */}
-            <TabsContent value="content" className="space-y-6">
+            {/* Homepage Content Tab */}
+            <TabsContent value="homepage" className="space-y-6">
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
@@ -613,6 +601,266 @@ const Admin = () => {
                           rows={2}
                         />
                       </div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end pt-4 border-t">
+                    <Button onClick={saveSiteContent} disabled={savingContent} className="calc-btn">
+                      {savingContent ? (
+                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      ) : (
+                        <Save className="h-4 w-4 mr-2" />
+                      )}
+                      Save Changes
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* About Page Content Tab */}
+            <TabsContent value="about" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Info className="h-5 w-5" />
+                    About Page Content
+                  </CardTitle>
+                  <CardDescription>
+                    Edit the content displayed on your About page
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="grid gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="aboutTitle">Page Title</Label>
+                      <Input
+                        id="aboutTitle"
+                        value={content.aboutTitle}
+                        onChange={(e) => updateContent('aboutTitle', e.target.value)}
+                        placeholder="About CalcHub"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="aboutIntro">Introduction</Label>
+                      <Textarea
+                        id="aboutIntro"
+                        value={content.aboutIntro}
+                        onChange={(e) => updateContent('aboutIntro', e.target.value)}
+                        placeholder="CalcHub provides free, accurate..."
+                        rows={3}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <h3 className="font-semibold text-lg border-b pb-2">Mission Section</h3>
+                    <div className="grid gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="aboutMissionTitle">Mission Title</Label>
+                        <Input
+                          id="aboutMissionTitle"
+                          value={content.aboutMissionTitle}
+                          onChange={(e) => updateContent('aboutMissionTitle', e.target.value)}
+                          placeholder="Our Mission"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="aboutMissionText">Mission Text</Label>
+                        <Textarea
+                          id="aboutMissionText"
+                          value={content.aboutMissionText}
+                          onChange={(e) => updateContent('aboutMissionText', e.target.value)}
+                          placeholder="To make calculations simple..."
+                          rows={3}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <h3 className="font-semibold text-lg border-b pb-2">What We Offer Section</h3>
+                    <div className="grid gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="aboutOfferTitle">Section Title</Label>
+                        <Input
+                          id="aboutOfferTitle"
+                          value={content.aboutOfferTitle}
+                          onChange={(e) => updateContent('aboutOfferTitle', e.target.value)}
+                          placeholder="What We Offer"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="aboutOfferText">Offer Text (comma-separated list)</Label>
+                        <Textarea
+                          id="aboutOfferText"
+                          value={content.aboutOfferText}
+                          onChange={(e) => updateContent('aboutOfferText', e.target.value)}
+                          placeholder="Health & Fitness calculators, Finance calculators..."
+                          rows={4}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <h3 className="font-semibold text-lg border-b pb-2">Promise Section</h3>
+                    <div className="grid gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="aboutPromiseTitle">Section Title</Label>
+                        <Input
+                          id="aboutPromiseTitle"
+                          value={content.aboutPromiseTitle}
+                          onChange={(e) => updateContent('aboutPromiseTitle', e.target.value)}
+                          placeholder="Our Promise"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="aboutPromiseText">Promise Text</Label>
+                        <Textarea
+                          id="aboutPromiseText"
+                          value={content.aboutPromiseText}
+                          onChange={(e) => updateContent('aboutPromiseText', e.target.value)}
+                          placeholder="All calculators are 100% free..."
+                          rows={3}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end pt-4 border-t">
+                    <Button onClick={saveSiteContent} disabled={savingContent} className="calc-btn">
+                      {savingContent ? (
+                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      ) : (
+                        <Save className="h-4 w-4 mr-2" />
+                      )}
+                      Save Changes
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Footer Content Tab */}
+            <TabsContent value="footer" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Globe className="h-5 w-5" />
+                    Footer Content
+                  </CardTitle>
+                  <CardDescription>
+                    Edit the content displayed in your website footer
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="grid gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="footerDescription">Footer Description</Label>
+                      <Textarea
+                        id="footerDescription"
+                        value={content.footerDescription}
+                        onChange={(e) => updateContent('footerDescription', e.target.value)}
+                        placeholder="Free online calculators for all your needs..."
+                        rows={3}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="footerEmail">Contact Email</Label>
+                      <Input
+                        id="footerEmail"
+                        type="email"
+                        value={content.footerEmail}
+                        onChange={(e) => updateContent('footerEmail', e.target.value)}
+                        placeholder="contact@calchub.com"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="footerCopyright">Copyright Text</Label>
+                      <Input
+                        id="footerCopyright"
+                        value={content.footerCopyright}
+                        onChange={(e) => updateContent('footerCopyright', e.target.value)}
+                        placeholder="CalcHub. All rights reserved."
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="footerTagline">Tagline</Label>
+                      <Input
+                        id="footerTagline"
+                        value={content.footerTagline}
+                        onChange={(e) => updateContent('footerTagline', e.target.value)}
+                        placeholder="Made with love for everyone"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end pt-4 border-t">
+                    <Button onClick={saveSiteContent} disabled={savingContent} className="calc-btn">
+                      {savingContent ? (
+                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      ) : (
+                        <Save className="h-4 w-4 mr-2" />
+                      )}
+                      Save Changes
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* SEO Content Tab */}
+            <TabsContent value="seo" className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Search className="h-5 w-5" />
+                    SEO Settings
+                  </CardTitle>
+                  <CardDescription>
+                    Edit the global SEO metadata for your website
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="grid gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="seoSiteTitle">Site Title</Label>
+                      <Input
+                        id="seoSiteTitle"
+                        value={content.seoSiteTitle}
+                        onChange={(e) => updateContent('seoSiteTitle', e.target.value)}
+                        placeholder="CalcHub"
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        This appears in the browser tab and search results
+                      </p>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="seoSiteDescription">Site Description</Label>
+                      <Textarea
+                        id="seoSiteDescription"
+                        value={content.seoSiteDescription}
+                        onChange={(e) => updateContent('seoSiteDescription', e.target.value)}
+                        placeholder="Free online calculators for health, finance, education..."
+                        rows={3}
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Max 160 characters recommended for search results
+                      </p>
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="seoKeywords">Keywords</Label>
+                      <Textarea
+                        id="seoKeywords"
+                        value={content.seoKeywords}
+                        onChange={(e) => updateContent('seoKeywords', e.target.value)}
+                        placeholder="calculator, online calculator, free calculator..."
+                        rows={3}
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Comma-separated keywords for SEO
+                      </p>
                     </div>
                   </div>
 

@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import { Calculator, Mail, Heart } from 'lucide-react';
 import { categoryInfo } from '@/lib/calculators';
+import { useSiteContent } from '@/hooks/useSiteContent';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { content } = useSiteContent();
 
   const quickLinks = [
     { name: 'Home', path: '/' },
@@ -33,15 +35,14 @@ const Footer = () => {
               </span>
             </Link>
             <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-              Free online calculators for all your daily, health, finance, and education needs. 
-              Quick, accurate, and easy to use.
+              {content.footerDescription}
             </p>
             <a
-              href="mailto:contact@calchub.com"
+              href={`mailto:${content.footerEmail}`}
               className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
             >
               <Mail className="h-4 w-4" />
-              contact@calchub.com
+              {content.footerEmail}
             </a>
           </div>
 
@@ -100,10 +101,18 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="mt-10 pt-6 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground text-center sm:text-left">
-            © {currentYear} CalcHub. All rights reserved.
+            © {currentYear} {content.footerCopyright}
           </p>
           <p className="text-sm text-muted-foreground flex items-center gap-1">
-            Made with <Heart className="h-4 w-4 text-destructive fill-destructive" /> for everyone
+            {content.footerTagline.includes('love') ? (
+              <>
+                {content.footerTagline.split('love')[0]}
+                <Heart className="h-4 w-4 text-destructive fill-destructive" />
+                {content.footerTagline.split('love')[1]}
+              </>
+            ) : (
+              content.footerTagline
+            )}
           </p>
         </div>
       </div>
