@@ -1,15 +1,26 @@
-import { useEffect, useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
-  // Use useLayoutEffect for synchronous scroll before paint
-  useLayoutEffect(() => {
+  useEffect(() => {
+    // Temporarily disable smooth scroll for instant scroll
+    const html = document.documentElement;
+    const originalScrollBehavior = html.style.scrollBehavior;
+    html.style.scrollBehavior = 'auto';
+
     // Multiple fallback methods for mobile compatibility
     window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
-    document.body.scrollTop = 0; // For Safari
+    html.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    // Restore smooth scroll after a short delay
+    const timer = setTimeout(() => {
+      html.style.scrollBehavior = originalScrollBehavior;
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, [pathname]);
 
   return null;
