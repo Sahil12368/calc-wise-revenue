@@ -47,7 +47,7 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div>
+          <div className="text-center md:text-left">
             <h3 className="font-semibold text-foreground mb-4">Quick Links</h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
@@ -64,7 +64,7 @@ const Footer = () => {
           </div>
 
           {/* Categories */}
-          <div>
+          <div className="text-center md:text-left">
             <h3 className="font-semibold text-foreground mb-4">Categories</h3>
             <ul className="space-y-2">
               {Object.entries(categoryInfo).map(([key, info]) => (
@@ -81,7 +81,7 @@ const Footer = () => {
           </div>
 
           {/* Legal */}
-          <div>
+          <div className="text-center md:text-left">
             <h3 className="font-semibold text-foreground mb-4">Legal</h3>
             <ul className="space-y-2">
               {legalLinks.map((link) => (
