@@ -3,11 +3,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import CalculatorLayout from '@/components/calculator/CalculatorLayout';
+import CurrencySelector, { Currency, formatCurrency, getCurrencySymbol } from '@/components/calculator/CurrencySelector';
 import { getCalculatorById } from '@/lib/calculators';
 
 const EMICalculator = () => {
   const calculator = getCalculatorById('emi')!;
   
+  const [currency, setCurrency] = useState<Currency>('INR');
   const [principal, setPrincipal] = useState('');
   const [rate, setRate] = useState('');
   const [tenure, setTenure] = useState('');
@@ -43,13 +45,7 @@ const EMICalculator = () => {
     setError('');
   };
 
-  const formatCurrency = (num: number) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      maximumFractionDigits: 0,
-    }).format(num);
-  };
+  const symbol = getCurrencySymbol(currency);
 
   return (
     <CalculatorLayout
@@ -88,11 +84,17 @@ Total Interest: ₹1,07,480`}
         },
       ]}
     >
+      {/* Currency Selector */}
+      <div className="flex items-center justify-between mb-4">
+        <Label className="text-sm text-muted-foreground">Select Currency:</Label>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </div>
+
       {/* Input Fields */}
       <div className="space-y-4 mb-6">
         <div>
           <Label htmlFor="principal" className="mb-2 block">
-            Loan Amount (₹)
+            Loan Amount ({symbol})
           </Label>
           <Input
             id="principal"
@@ -153,17 +155,17 @@ Total Interest: ₹1,07,480`}
         <div className="calc-result animate-scale-in">
           <div className="text-center mb-6">
             <p className="text-sm text-muted-foreground mb-2">Monthly EMI:</p>
-            <p className="calc-result-value">{formatCurrency(result.emi)}</p>
+            <p className="calc-result-value">{formatCurrency(result.emi, currency)}</p>
           </div>
           
           <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border">
             <div className="text-center">
               <p className="text-sm text-muted-foreground mb-1">Total Payment</p>
-              <p className="text-xl font-semibold text-foreground">{formatCurrency(result.totalPayment)}</p>
+              <p className="text-xl font-semibold text-foreground">{formatCurrency(result.totalPayment, currency)}</p>
             </div>
             <div className="text-center">
               <p className="text-sm text-muted-foreground mb-1">Total Interest</p>
-              <p className="text-xl font-semibold text-warning">{formatCurrency(result.totalInterest)}</p>
+              <p className="text-xl font-semibold text-warning">{formatCurrency(result.totalInterest, currency)}</p>
             </div>
           </div>
           
