@@ -75,6 +75,24 @@ Age: 35 years, 11 months, and 8 days`}
           answer: 'Exact age is needed for legal documents, insurance policies, pension calculations, and various government applications that require precise age verification.',
         },
       ]}
+      contentSections={[
+        {
+          title: 'What is an Age Calculator?',
+          content: 'An age calculator is a tool that computes your exact age from your date of birth to any specified date. Unlike simply knowing your birth year, this calculator provides your precise age in years, months, and days, accounting for varying month lengths and leap years.\n\nThis precision is important for legal documents, insurance applications, retirement planning, and many official purposes where exact age matters.',
+        },
+        {
+          title: 'How to Use This Calculator',
+          content: '1. Enter your date of birth using the date picker\n2. The "Calculate Age On" field defaults to today\'s date\n3. Change the target date if you want to calculate your age on a different day\n4. Click "Calculate Age" to see your exact age\n\nYou can use past or future dates to see how old you were or will be on any given day.',
+        },
+        {
+          title: 'Common Uses for Age Calculation',
+          content: '• Legal Requirements: Age verification for voting, driving, drinking, retirement\n• Insurance: Many policies require exact age for premium calculation\n• Employment: Some jobs have age requirements or retirement ages\n• Education: School enrollment cutoff dates\n• Medical: Age-specific health screenings and treatments\n• Sports: Age group competitions and eligibility\n• Immigration: Visa and citizenship requirements\n• Celebrations: Planning milestone birthdays and anniversaries',
+        },
+        {
+          title: 'How Age Calculation Works',
+          content: 'The calculator:\n\n1. First counts complete years between the dates\n2. Then counts remaining complete months\n3. Finally counts remaining days\n\nThis accounts for:\n• Varying month lengths (28-31 days)\n• Leap years (February 29th)\n• Different year lengths (365 or 366 days)\n\nThe result gives you the most accurate representation of the time elapsed.',
+        },
+      ]}
     >
       {/* Input Fields */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">

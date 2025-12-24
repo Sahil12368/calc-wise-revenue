@@ -53,6 +53,24 @@ const MortgageCalculator = () => {
         { question: 'How much house can I afford?', answer: 'Generally, your monthly housing costs should not exceed 28% of your gross monthly income. Use this calculator to find a payment that fits your budget.' },
         { question: 'Should I get a 15 or 30-year mortgage?', answer: 'A 15-year mortgage has higher monthly payments but saves significantly on interest. A 30-year mortgage has lower payments but costs more over time.' },
       ]}
+      contentSections={[
+        {
+          title: 'What is a Mortgage Calculator?',
+          content: 'A mortgage calculator is an essential tool for homebuyers that estimates your monthly home loan payments based on the purchase price, down payment, interest rate, and loan term. It helps you understand the true cost of homeownership and determine how much house you can afford.\n\nUnderstanding your mortgage payment before house hunting helps you set a realistic budget and avoid financial stress after purchase.',
+        },
+        {
+          title: 'How to Use This Calculator',
+          content: '1. Select your currency (USD or INR)\n2. Enter the loan amount (home price minus down payment)\n3. Enter the annual interest rate\n4. Enter the loan term in years (typically 15 or 30)\n5. Click "Calculate" to see your payment breakdown\n\nNote: This calculator shows principal and interest only. Actual payments may include taxes, insurance, and PMI.',
+        },
+        {
+          title: 'Types of Mortgages',
+          content: '• Fixed-Rate Mortgage: Interest rate stays the same for the entire loan term. Most popular choice for stability.\n\n• Adjustable-Rate Mortgage (ARM): Rate changes periodically based on market conditions. Lower initial rates but unpredictable future payments.\n\n• FHA Loan: Government-backed with lower down payment requirements. Good for first-time buyers.\n\n• VA Loan: For veterans and military families. Often requires no down payment.\n\n• Jumbo Loan: For amounts exceeding conventional loan limits. Higher requirements.',
+        },
+        {
+          title: 'Factors Affecting Your Mortgage Rate',
+          content: '• Credit Score: Higher scores get better rates\n• Down Payment: Larger down payments often mean lower rates\n• Loan Term: Shorter terms typically have lower rates\n• Property Type: Single-family homes often get better rates than condos\n• Loan Type: Fixed rates differ from adjustable rates\n• Market Conditions: Economic factors influence overall rate levels\n• Points: Paying points upfront can lower your rate',
+        },
+      ]}
     >
       {/* Currency Selector */}
       <div className="flex items-center justify-between mb-4">

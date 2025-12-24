@@ -76,6 +76,28 @@ const SalaryCalculator = () => {
         { question: 'Are these before or after taxes?', answer: 'This calculator shows gross (before tax) amounts. Your take-home pay will be lower after taxes.' },
         { question: 'How is bi-weekly different from semi-monthly?', answer: 'Bi-weekly is every 2 weeks (26 paychecks/year). Semi-monthly is twice a month (24 paychecks/year).' },
       ]}
+      contentSections={[
+        {
+          title: 'What is a Salary Calculator?',
+          content: 'A salary calculator converts your pay between different time periods—hourly, daily, weekly, bi-weekly, monthly, and yearly. This helps you compare job offers, understand your true earning rate, or budget based on your pay schedule.\n\nWhether you are paid hourly and want to know your annual salary, or salaried and curious about your hourly rate, this calculator provides instant conversions.',
+        },
+        {
+          title: 'How to Use This Calculator',
+          content: '1. Select your currency\n2. Enter your salary amount\n3. Select the pay period (hourly, daily, weekly, etc.)\n4. Adjust hours per week if different from 40\n5. Click "Calculate" to see all conversions\n\nThe calculator assumes a standard work year of 52 weeks and 5 work days per week.',
+        },
+        {
+          title: 'Understanding Pay Periods',
+          content: '• Hourly: Paid for each hour worked\n• Daily: Paid per day (useful for contractors)\n• Weekly: Paid once per week (52 paychecks/year)\n• Bi-weekly: Paid every two weeks (26 paychecks/year)\n• Semi-monthly: Paid twice per month (24 paychecks/year)\n• Monthly: Paid once per month (12 paychecks/year)\n• Yearly: Annual salary\n\nNote: Bi-weekly and semi-monthly are different! Bi-weekly gives you two extra paychecks per year.',
+        },
+        {
+          title: 'Comparing Job Offers',
+          content: 'When comparing job offers, convert everything to the same time period:\n\n• $25/hour = $52,000/year (at 40 hrs/week)\n• $4,500/month = $54,000/year\n• $2,000/bi-weekly = $52,000/year\n\nDon\'t forget to consider:\n• Benefits value (health insurance, retirement matching)\n• Paid time off\n• Bonus potential\n• Work hours expected\n• Commute costs',
+        },
+        {
+          title: 'Gross vs Net Salary',
+          content: 'This calculator shows gross (before-tax) amounts. Your net (take-home) pay will be lower after:\n\n• Income Tax: Federal and state/local taxes\n• Social Security: ~6.2% in the US\n• Medicare: ~1.45% in the US\n• Health Insurance: If deducted from paycheck\n• Retirement Contributions: 401(k), pension, etc.\n• Other Deductions: Union dues, garnishments, etc.\n\nActual take-home is typically 65-80% of gross pay.',
+        },
+      ]}
     >
       {/* Currency Selector */}
       <div className="flex items-center justify-between mb-4">

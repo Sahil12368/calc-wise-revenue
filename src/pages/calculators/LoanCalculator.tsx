@@ -57,6 +57,24 @@ const LoanCalculator = () => {
         { question: 'What is APR?', answer: 'APR (Annual Percentage Rate) is the yearly cost of borrowing, including interest and fees, expressed as a percentage.' },
         { question: 'How can I reduce my loan costs?', answer: 'You can reduce costs by making extra payments, choosing a shorter term, improving your credit score, or comparing rates from multiple lenders.' },
       ]}
+      contentSections={[
+        {
+          title: 'What is a Loan Calculator?',
+          content: 'A loan calculator is a financial tool that helps you estimate monthly payments, total cost, and interest charges for any type of loan. By entering the loan amount, interest rate, and repayment term, you can quickly understand the true cost of borrowing and make informed financial decisions.\n\nThis calculator works for personal loans, auto loans, student loans, and any other fixed-term installment loan.',
+        },
+        {
+          title: 'How to Use This Calculator',
+          content: '1. Select your preferred currency (USD or INR)\n2. Enter the loan amount you wish to borrow\n3. Enter the annual interest rate (APR)\n4. Enter the loan term in months\n5. Click "Calculate" to see your payment breakdown\n\nThe results show your monthly payment, total amount paid, and total interest charged over the life of the loan.',
+        },
+        {
+          title: 'Understanding Loan Terms',
+          content: '• Principal: The original amount borrowed\n• Interest Rate (APR): The annual cost of borrowing, expressed as a percentage\n• Loan Term: The duration over which you will repay the loan\n• Monthly Payment: The fixed amount due each month\n• Total Interest: The extra amount paid beyond the principal\n• Amortization: The process of paying off debt through regular payments',
+        },
+        {
+          title: 'Tips for Getting Better Loan Terms',
+          content: '• Improve your credit score before applying\n• Compare rates from multiple lenders\n• Consider a shorter loan term to save on interest\n• Make a larger down payment when possible\n• Look for loans with no prepayment penalties\n• Consider secured loans for lower rates\n• Time your application when rates are favorable',
+        },
+      ]}
     >
       {/* Currency Selector */}
       <div className="flex items-center justify-between mb-4">

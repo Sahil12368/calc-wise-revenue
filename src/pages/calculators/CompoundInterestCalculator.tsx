@@ -89,6 +89,28 @@ Interest Earned: ₹64,530.89`}
           answer: 'The Rule of 72 estimates how long it takes to double your money. Divide 72 by the interest rate. At 8%, money doubles in about 9 years.',
         },
       ]}
+      contentSections={[
+        {
+          title: 'What is Compound Interest?',
+          content: 'Compound interest is often called "interest on interest" because you earn returns not just on your original principal, but also on the interest that has already accumulated. This creates exponential growth over time, making it one of the most powerful concepts in finance.\n\nAlbert Einstein allegedly called compound interest "the eighth wonder of the world." Whether he said it or not, the principle holds true—compound interest can dramatically grow your wealth over time.',
+        },
+        {
+          title: 'How to Use This Calculator',
+          content: '1. Enter your principal (starting) amount\n2. Enter the annual interest rate\n3. Enter the time period in years\n4. Select how often interest is compounded\n5. Click "Calculate" to see your results\n\nThe calculator shows your final amount, compound interest earned, and compares it to what you would earn with simple interest.',
+        },
+        {
+          title: 'The Power of Compounding Frequency',
+          content: 'More frequent compounding leads to higher returns:\n\n• Annually (n=1): Interest calculated once per year\n• Semi-Annually (n=2): Twice per year\n• Quarterly (n=4): Four times per year\n• Monthly (n=12): Twelve times per year\n• Daily (n=365): Every day\n\nThe difference becomes more significant with larger amounts and longer time periods.',
+        },
+        {
+          title: 'Compound Interest vs Simple Interest',
+          content: 'Simple Interest: Calculated only on the original principal. Formula: I = P × R × T\n\nCompound Interest: Calculated on principal plus accumulated interest. Formula: A = P(1 + r/n)^(nt)\n\nExample with ₹1,00,000 at 10% for 10 years:\n• Simple Interest: ₹1,00,000 in interest\n• Compound Interest (annual): ₹1,59,374 in interest\n\nYou earn 59% more with compound interest!',
+        },
+        {
+          title: 'Real-World Applications',
+          content: '• Savings Accounts: Banks compound interest on your deposits\n• Fixed Deposits: Higher rates with compound growth\n• Mutual Funds: Returns reinvested for compounding\n• Retirement Accounts: Long-term compounding builds wealth\n• Loans: Understanding compound interest helps avoid debt traps\n• Credit Cards: High compound rates make debt grow quickly',
+        },
+      ]}
     >
       {/* Currency Selector */}
       <div className="flex items-center justify-between mb-4">

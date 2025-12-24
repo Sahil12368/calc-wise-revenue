@@ -88,6 +88,24 @@ Category: Normal weight`}
           answer: 'This calculator is designed for adults (18+). Children and teens should use age-specific BMI percentile charts.',
         },
       ]}
+      contentSections={[
+        {
+          title: 'What is BMI?',
+          content: 'Body Mass Index (BMI) is a simple measurement that uses your height and weight to determine if your weight falls within a healthy range. It was developed by Belgian mathematician Adolphe Quetelet in the 1830s and has since become a widely used screening tool in healthcare settings worldwide.\n\nBMI provides a quick snapshot of whether you might be underweight, at a healthy weight, overweight, or obese. Healthcare professionals use it as an initial assessment tool, though it should be considered alongside other health indicators.',
+        },
+        {
+          title: 'How to Use This BMI Calculator',
+          content: '1. Select your preferred unit system (Metric or Imperial)\n2. Enter your height in centimeters (or feet and inches)\n3. Enter your weight in kilograms (or pounds)\n4. Click "Calculate BMI" to see your result\n\nThe calculator will display your BMI value and the corresponding weight category, along with a visual scale showing where you fall on the BMI spectrum.',
+        },
+        {
+          title: 'Understanding BMI Categories',
+          content: '• Underweight (BMI < 18.5): May indicate malnutrition, eating disorders, or other health conditions. Consider consulting a healthcare provider.\n\n• Normal Weight (BMI 18.5-24.9): Generally associated with good health outcomes. Maintain healthy eating and regular physical activity.\n\n• Overweight (BMI 25-29.9): May increase risk of certain health conditions. Lifestyle changes may be beneficial.\n\n• Obese (BMI ≥ 30): Associated with higher risk of heart disease, diabetes, and other conditions. Medical consultation is recommended.',
+        },
+        {
+          title: 'Limitations of BMI',
+          content: 'While BMI is a useful screening tool, it has important limitations:\n\n• Does not distinguish between muscle and fat mass (athletes may have high BMI but low body fat)\n• Does not account for fat distribution (belly fat is more dangerous than fat elsewhere)\n• May not be accurate for elderly individuals who have lost muscle mass\n• Does not consider bone density or overall body composition\n• Different ethnicities may have varying health risks at the same BMI\n\nFor a complete health assessment, combine BMI with other measurements like waist circumference, body fat percentage, and blood tests.',
+        },
+      ]}
     >
       {/* Unit Selector */}
       <div className="mb-6">
