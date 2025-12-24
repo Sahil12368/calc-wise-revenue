@@ -3,11 +3,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import CalculatorLayout from '@/components/calculator/CalculatorLayout';
+import CurrencySelector, { Currency, formatCurrency, getCurrencySymbol } from '@/components/calculator/CurrencySelector';
 import { getCalculatorById } from '@/lib/calculators';
 
 const InflationCalculator = () => {
   const calculator = getCalculatorById('inflation')!;
   
+  const [currency, setCurrency] = useState<Currency>('USD');
   const [amount, setAmount] = useState('');
   const [rate, setRate] = useState('');
   const [years, setYears] = useState('');
@@ -34,6 +36,8 @@ const InflationCalculator = () => {
     setResult(null);
   };
 
+  const symbol = getCurrencySymbol(currency);
+
   return (
     <CalculatorLayout
       calculator={calculator}
@@ -48,9 +52,15 @@ const InflationCalculator = () => {
         { question: 'How can I protect against inflation?', answer: 'Invest in assets that historically outpace inflation, such as stocks, real estate, or inflation-protected securities (TIPS).' },
       ]}
     >
+      {/* Currency Selector */}
+      <div className="flex items-center justify-between mb-4">
+        <Label className="text-sm text-muted-foreground">Select Currency:</Label>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <div>
-          <Label htmlFor="amount" className="mb-2 block">Current Amount ($)</Label>
+          <Label htmlFor="amount" className="mb-2 block">Current Amount ({symbol})</Label>
           <Input id="amount" type="number" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="100" className="calc-input" />
         </div>
         <div>
@@ -73,15 +83,15 @@ const InflationCalculator = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
             <div>
               <p className="text-sm text-muted-foreground mb-1">Future Cost of Same Goods</p>
-              <p className="calc-result-value">${result.futureValue.toFixed(2)}</p>
+              <p className="calc-result-value">{formatCurrency(result.futureValue, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Future Purchasing Power</p>
-              <p className="text-2xl font-bold text-foreground">${result.purchasingPower.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-foreground">{formatCurrency(result.purchasingPower, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Value Lost to Inflation</p>
-              <p className="text-2xl font-bold text-destructive">${result.lostValue.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-destructive">{formatCurrency(result.lostValue, currency)}</p>
             </div>
           </div>
         </div>

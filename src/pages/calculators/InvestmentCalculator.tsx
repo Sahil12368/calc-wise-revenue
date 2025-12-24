@@ -3,11 +3,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import CalculatorLayout from '@/components/calculator/CalculatorLayout';
+import CurrencySelector, { Currency, formatCurrency, getCurrencySymbol } from '@/components/calculator/CurrencySelector';
 import { getCalculatorById } from '@/lib/calculators';
 
 const InvestmentCalculator = () => {
   const calculator = getCalculatorById('investment')!;
   
+  const [currency, setCurrency] = useState<Currency>('USD');
   const [initial, setInitial] = useState('');
   const [monthly, setMonthly] = useState('');
   const [rate, setRate] = useState('');
@@ -39,6 +41,8 @@ const InvestmentCalculator = () => {
     setResult(null);
   };
 
+  const symbol = getCurrencySymbol(currency);
+
   return (
     <CalculatorLayout
       calculator={calculator}
@@ -53,13 +57,19 @@ const InvestmentCalculator = () => {
         { question: 'What return rate should I use?', answer: 'Stock market historical average is 7-10%. Use a conservative estimate of 6-8% for long-term planning.' },
       ]}
     >
+      {/* Currency Selector */}
+      <div className="flex items-center justify-between mb-4">
+        <Label className="text-sm text-muted-foreground">Select Currency:</Label>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
         <div>
-          <Label htmlFor="initial" className="mb-2 block">Initial Investment ($)</Label>
+          <Label htmlFor="initial" className="mb-2 block">Initial Investment ({symbol})</Label>
           <Input id="initial" type="number" value={initial} onChange={(e) => setInitial(e.target.value)} placeholder="5000" className="calc-input" />
         </div>
         <div>
-          <Label htmlFor="monthly" className="mb-2 block">Monthly Contribution ($)</Label>
+          <Label htmlFor="monthly" className="mb-2 block">Monthly Contribution ({symbol})</Label>
           <Input id="monthly" type="number" value={monthly} onChange={(e) => setMonthly(e.target.value)} placeholder="200" className="calc-input" />
         </div>
         <div>
@@ -82,15 +92,15 @@ const InvestmentCalculator = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
             <div>
               <p className="text-sm text-muted-foreground mb-1">Future Value</p>
-              <p className="calc-result-value">${result.total.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p>
+              <p className="calc-result-value">{formatCurrency(result.total, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Total Invested</p>
-              <p className="text-2xl font-bold text-foreground">${result.invested.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p>
+              <p className="text-2xl font-bold text-foreground">{formatCurrency(result.invested, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Investment Returns</p>
-              <p className="text-2xl font-bold text-foreground">${result.returns.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p>
+              <p className="text-2xl font-bold text-foreground">{formatCurrency(result.returns, currency)}</p>
             </div>
           </div>
         </div>

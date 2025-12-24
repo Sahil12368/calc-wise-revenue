@@ -4,11 +4,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import CalculatorLayout from '@/components/calculator/CalculatorLayout';
+import CurrencySelector, { Currency, formatCurrency, getCurrencySymbol } from '@/components/calculator/CurrencySelector';
 import { getCalculatorById } from '@/lib/calculators';
 
 const SalaryCalculator = () => {
   const calculator = getCalculatorById('salary')!;
   
+  const [currency, setCurrency] = useState<Currency>('USD');
   const [amount, setAmount] = useState('');
   const [type, setType] = useState('yearly');
   const [hoursPerWeek, setHoursPerWeek] = useState('40');
@@ -59,6 +61,8 @@ const SalaryCalculator = () => {
     setResult(null);
   };
 
+  const symbol = getCurrencySymbol(currency);
+
   return (
     <CalculatorLayout
       calculator={calculator}
@@ -73,9 +77,15 @@ const SalaryCalculator = () => {
         { question: 'How is bi-weekly different from semi-monthly?', answer: 'Bi-weekly is every 2 weeks (26 paychecks/year). Semi-monthly is twice a month (24 paychecks/year).' },
       ]}
     >
+      {/* Currency Selector */}
+      <div className="flex items-center justify-between mb-4">
+        <Label className="text-sm text-muted-foreground">Select Currency:</Label>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <div>
-          <Label htmlFor="amount" className="mb-2 block">Amount ($)</Label>
+          <Label htmlFor="amount" className="mb-2 block">Amount ({symbol})</Label>
           <Input id="amount" type="number" value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="50000" className="calc-input" />
         </div>
         <div>
@@ -110,27 +120,27 @@ const SalaryCalculator = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
             <div>
               <p className="text-sm text-muted-foreground mb-1">Hourly</p>
-              <p className="text-xl font-bold text-foreground">${result.hourly.toFixed(2)}</p>
+              <p className="text-xl font-bold text-foreground">{formatCurrency(result.hourly, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Daily</p>
-              <p className="text-xl font-bold text-foreground">${result.daily.toFixed(2)}</p>
+              <p className="text-xl font-bold text-foreground">{formatCurrency(result.daily, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Weekly</p>
-              <p className="text-xl font-bold text-foreground">${result.weekly.toFixed(2)}</p>
+              <p className="text-xl font-bold text-foreground">{formatCurrency(result.weekly, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Bi-weekly</p>
-              <p className="text-xl font-bold text-foreground">${result.biweekly.toFixed(2)}</p>
+              <p className="text-xl font-bold text-foreground">{formatCurrency(result.biweekly, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Monthly</p>
-              <p className="text-xl font-bold text-foreground">${result.monthly.toFixed(2)}</p>
+              <p className="text-xl font-bold text-foreground">{formatCurrency(result.monthly, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Yearly</p>
-              <p className="calc-result-value text-xl">${result.yearly.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p>
+              <p className="calc-result-value text-xl">{formatCurrency(result.yearly, currency)}</p>
             </div>
           </div>
         </div>

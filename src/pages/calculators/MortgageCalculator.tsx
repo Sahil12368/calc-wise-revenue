@@ -3,11 +3,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import CalculatorLayout from '@/components/calculator/CalculatorLayout';
+import CurrencySelector, { Currency, formatCurrency, getCurrencySymbol } from '@/components/calculator/CurrencySelector';
 import { getCalculatorById } from '@/lib/calculators';
 
 const MortgageCalculator = () => {
   const calculator = getCalculatorById('mortgage')!;
   
+  const [currency, setCurrency] = useState<Currency>('USD');
   const [principal, setPrincipal] = useState('');
   const [rate, setRate] = useState('');
   const [years, setYears] = useState('');
@@ -36,6 +38,8 @@ const MortgageCalculator = () => {
     setResult(null);
   };
 
+  const symbol = getCurrencySymbol(currency);
+
   return (
     <CalculatorLayout
       calculator={calculator}
@@ -50,9 +54,15 @@ const MortgageCalculator = () => {
         { question: 'Should I get a 15 or 30-year mortgage?', answer: 'A 15-year mortgage has higher monthly payments but saves significantly on interest. A 30-year mortgage has lower payments but costs more over time.' },
       ]}
     >
+      {/* Currency Selector */}
+      <div className="flex items-center justify-between mb-4">
+        <Label className="text-sm text-muted-foreground">Select Currency:</Label>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <div>
-          <Label htmlFor="principal" className="mb-2 block">Loan Amount ($)</Label>
+          <Label htmlFor="principal" className="mb-2 block">Loan Amount ({symbol})</Label>
           <Input id="principal" type="number" value={principal} onChange={(e) => setPrincipal(e.target.value)} placeholder="300000" className="calc-input" />
         </div>
         <div>
@@ -75,15 +85,15 @@ const MortgageCalculator = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
             <div>
               <p className="text-sm text-muted-foreground mb-1">Monthly Payment</p>
-              <p className="calc-result-value">${result.monthly.toFixed(2)}</p>
+              <p className="calc-result-value">{formatCurrency(result.monthly, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Total Payment</p>
-              <p className="text-2xl font-bold text-foreground">${result.total.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-foreground">{formatCurrency(result.total, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Total Interest</p>
-              <p className="text-2xl font-bold text-foreground">${result.interest.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-foreground">{formatCurrency(result.interest, currency)}</p>
             </div>
           </div>
         </div>

@@ -3,11 +3,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import CalculatorLayout from '@/components/calculator/CalculatorLayout';
+import CurrencySelector, { Currency, formatCurrency, getCurrencySymbol } from '@/components/calculator/CurrencySelector';
 import { getCalculatorById } from '@/lib/calculators';
 
 const AutoLoanCalculator = () => {
   const calculator = getCalculatorById('auto-loan')!;
   
+  const [currency, setCurrency] = useState<Currency>('USD');
   const [price, setPrice] = useState('');
   const [downPayment, setDownPayment] = useState('');
   const [rate, setRate] = useState('');
@@ -45,6 +47,8 @@ const AutoLoanCalculator = () => {
     setResult(null);
   };
 
+  const symbol = getCurrencySymbol(currency);
+
   return (
     <CalculatorLayout
       calculator={calculator}
@@ -59,13 +63,19 @@ const AutoLoanCalculator = () => {
         { question: 'Does my credit score affect my rate?', answer: 'Yes, a higher credit score typically qualifies you for lower interest rates, which can save thousands over the life of the loan.' },
       ]}
     >
+      {/* Currency Selector */}
+      <div className="flex items-center justify-between mb-4">
+        <Label className="text-sm text-muted-foreground">Select Currency:</Label>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
         <div>
-          <Label htmlFor="price" className="mb-2 block">Vehicle Price ($)</Label>
+          <Label htmlFor="price" className="mb-2 block">Vehicle Price ({symbol})</Label>
           <Input id="price" type="number" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="25000" className="calc-input" />
         </div>
         <div>
-          <Label htmlFor="downPayment" className="mb-2 block">Down Payment ($)</Label>
+          <Label htmlFor="downPayment" className="mb-2 block">Down Payment ({symbol})</Label>
           <Input id="downPayment" type="number" value={downPayment} onChange={(e) => setDownPayment(e.target.value)} placeholder="5000" className="calc-input" />
         </div>
         <div>
@@ -88,19 +98,19 @@ const AutoLoanCalculator = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             <div>
               <p className="text-sm text-muted-foreground mb-1">Monthly Payment</p>
-              <p className="calc-result-value text-2xl">${result.monthly.toFixed(2)}</p>
+              <p className="calc-result-value text-2xl">{formatCurrency(result.monthly, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Loan Amount</p>
-              <p className="text-xl font-bold text-foreground">${result.loanAmount.toFixed(2)}</p>
+              <p className="text-xl font-bold text-foreground">{formatCurrency(result.loanAmount, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Total Payment</p>
-              <p className="text-xl font-bold text-foreground">${result.total.toFixed(2)}</p>
+              <p className="text-xl font-bold text-foreground">{formatCurrency(result.total, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Total Interest</p>
-              <p className="text-xl font-bold text-foreground">${result.interest.toFixed(2)}</p>
+              <p className="text-xl font-bold text-foreground">{formatCurrency(result.interest, currency)}</p>
             </div>
           </div>
         </div>

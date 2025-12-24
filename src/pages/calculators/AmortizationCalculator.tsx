@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import CalculatorLayout from '@/components/calculator/CalculatorLayout';
+import CurrencySelector, { Currency, formatCurrency, getCurrencySymbol } from '@/components/calculator/CurrencySelector';
 import { getCalculatorById } from '@/lib/calculators';
 
 interface AmortizationRow {
@@ -16,6 +17,7 @@ interface AmortizationRow {
 const AmortizationCalculator = () => {
   const calculator = getCalculatorById('amortization')!;
   
+  const [currency, setCurrency] = useState<Currency>('USD');
   const [loanAmount, setLoanAmount] = useState('');
   const [rate, setRate] = useState('');
   const [months, setMonths] = useState('');
@@ -57,6 +59,8 @@ const AmortizationCalculator = () => {
     setResult(null);
   };
 
+  const symbol = getCurrencySymbol(currency);
+
   return (
     <CalculatorLayout
       calculator={calculator}
@@ -71,9 +75,15 @@ const AmortizationCalculator = () => {
         { question: 'How can I pay off my loan faster?', answer: 'Making extra principal payments reduces your balance faster and decreases total interest paid.' },
       ]}
     >
+      {/* Currency Selector */}
+      <div className="flex items-center justify-between mb-4">
+        <Label className="text-sm text-muted-foreground">Select Currency:</Label>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <div>
-          <Label htmlFor="loanAmount" className="mb-2 block">Loan Amount ($)</Label>
+          <Label htmlFor="loanAmount" className="mb-2 block">Loan Amount ({symbol})</Label>
           <Input id="loanAmount" type="number" value={loanAmount} onChange={(e) => setLoanAmount(e.target.value)} placeholder="100000" className="calc-input" />
         </div>
         <div>
@@ -95,7 +105,7 @@ const AmortizationCalculator = () => {
         <div className="animate-scale-in space-y-6">
           <div className="calc-result">
             <p className="text-sm text-muted-foreground mb-1 text-center">Monthly Payment</p>
-            <p className="calc-result-value text-center">${result.monthly.toFixed(2)}</p>
+            <p className="calc-result-value text-center">{formatCurrency(result.monthly, currency)}</p>
           </div>
 
           <div className="overflow-x-auto">
@@ -113,10 +123,10 @@ const AmortizationCalculator = () => {
                 {result.schedule.map((row) => (
                   <tr key={row.month} className="border-b border-border/50">
                     <td className="py-2 px-3">{row.month}</td>
-                    <td className="py-2 px-3 text-right">${row.payment.toFixed(2)}</td>
-                    <td className="py-2 px-3 text-right">${row.principal.toFixed(2)}</td>
-                    <td className="py-2 px-3 text-right">${row.interest.toFixed(2)}</td>
-                    <td className="py-2 px-3 text-right">${row.balance.toFixed(2)}</td>
+                    <td className="py-2 px-3 text-right">{formatCurrency(row.payment, currency)}</td>
+                    <td className="py-2 px-3 text-right">{formatCurrency(row.principal, currency)}</td>
+                    <td className="py-2 px-3 text-right">{formatCurrency(row.interest, currency)}</td>
+                    <td className="py-2 px-3 text-right">{formatCurrency(row.balance, currency)}</td>
                   </tr>
                 ))}
               </tbody>
