@@ -3,11 +3,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import CalculatorLayout from '@/components/calculator/CalculatorLayout';
+import CurrencySelector, { Currency, formatCurrency, getCurrencySymbol } from '@/components/calculator/CurrencySelector';
 import { getCalculatorById } from '@/lib/calculators';
 
 const PaymentCalculator = () => {
   const calculator = getCalculatorById('payment')!;
   
+  const [currency, setCurrency] = useState<Currency>('USD');
   const [principal, setPrincipal] = useState('');
   const [rate, setRate] = useState('');
   const [months, setMonths] = useState('');
@@ -40,6 +42,8 @@ const PaymentCalculator = () => {
     setResult(null);
   };
 
+  const symbol = getCurrencySymbol(currency);
+
   return (
     <CalculatorLayout
       calculator={calculator}
@@ -54,9 +58,15 @@ const PaymentCalculator = () => {
         { question: 'Can I switch payment frequencies?', answer: 'Most lenders allow you to choose your payment frequency. Check with your lender about available options and any fees.' },
       ]}
     >
+      {/* Currency Selector */}
+      <div className="flex items-center justify-between mb-4">
+        <Label className="text-sm text-muted-foreground">Select Currency:</Label>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <div>
-          <Label htmlFor="principal" className="mb-2 block">Loan Amount ($)</Label>
+          <Label htmlFor="principal" className="mb-2 block">Loan Amount ({symbol})</Label>
           <Input id="principal" type="number" value={principal} onChange={(e) => setPrincipal(e.target.value)} placeholder="15000" className="calc-input" />
         </div>
         <div>
@@ -79,15 +89,15 @@ const PaymentCalculator = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
             <div>
               <p className="text-sm text-muted-foreground mb-1">Monthly Payment</p>
-              <p className="calc-result-value">${result.monthly.toFixed(2)}</p>
+              <p className="calc-result-value">{formatCurrency(result.monthly, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Bi-weekly Payment</p>
-              <p className="text-2xl font-bold text-foreground">${result.biweekly.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-foreground">{formatCurrency(result.biweekly, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Weekly Payment</p>
-              <p className="text-2xl font-bold text-foreground">${result.weekly.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-foreground">{formatCurrency(result.weekly, currency)}</p>
             </div>
           </div>
         </div>

@@ -4,11 +4,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import CalculatorLayout from '@/components/calculator/CalculatorLayout';
+import CurrencySelector, { Currency, formatCurrency, getCurrencySymbol } from '@/components/calculator/CurrencySelector';
 import { getCalculatorById } from '@/lib/calculators';
 
 const InterestCalculator = () => {
   const calculator = getCalculatorById('interest')!;
   
+  const [currency, setCurrency] = useState<Currency>('USD');
   const [principal, setPrincipal] = useState('');
   const [rate, setRate] = useState('');
   const [time, setTime] = useState('');
@@ -43,6 +45,8 @@ const InterestCalculator = () => {
     setResult(null);
   };
 
+  const symbol = getCurrencySymbol(currency);
+
   return (
     <CalculatorLayout
       calculator={calculator}
@@ -57,9 +61,15 @@ const InterestCalculator = () => {
         { question: 'Which is better for savings?', answer: 'Compound interest is better for savings as your money grows faster. For loans, simple interest typically means you pay less.' },
       ]}
     >
+      {/* Currency Selector */}
+      <div className="flex items-center justify-between mb-4">
+        <Label className="text-sm text-muted-foreground">Select Currency:</Label>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
         <div>
-          <Label htmlFor="principal" className="mb-2 block">Principal Amount ($)</Label>
+          <Label htmlFor="principal" className="mb-2 block">Principal Amount ({symbol})</Label>
           <Input id="principal" type="number" value={principal} onChange={(e) => setPrincipal(e.target.value)} placeholder="10000" className="calc-input" />
         </div>
         <div>
@@ -94,11 +104,11 @@ const InterestCalculator = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-center">
             <div>
               <p className="text-sm text-muted-foreground mb-1">Interest Earned</p>
-              <p className="calc-result-value">${result.interest.toFixed(2)}</p>
+              <p className="calc-result-value">{formatCurrency(result.interest, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Total Amount</p>
-              <p className="text-2xl font-bold text-foreground">${result.total.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-foreground">{formatCurrency(result.total, currency)}</p>
             </div>
           </div>
         </div>

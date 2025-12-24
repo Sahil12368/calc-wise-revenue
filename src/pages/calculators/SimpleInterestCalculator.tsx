@@ -3,11 +3,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import CalculatorLayout from '@/components/calculator/CalculatorLayout';
+import CurrencySelector, { Currency, formatCurrency, getCurrencySymbol } from '@/components/calculator/CurrencySelector';
 import { getCalculatorById } from '@/lib/calculators';
 
 const SimpleInterestCalculator = () => {
   const calculator = getCalculatorById('simple-interest')!;
   
+  const [currency, setCurrency] = useState<Currency>('INR');
   const [principal, setPrincipal] = useState('');
   const [rate, setRate] = useState('');
   const [time, setTime] = useState('');
@@ -39,13 +41,7 @@ const SimpleInterestCalculator = () => {
     setError('');
   };
 
-  const formatCurrency = (num: number) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      maximumFractionDigits: 2,
-    }).format(num);
-  };
+  const symbol = getCurrencySymbol(currency);
 
   return (
     <CalculatorLayout
@@ -77,10 +73,16 @@ Total Amount = ₹50,000 + ₹12,000 = ₹62,000`}
         },
       ]}
     >
+      {/* Currency Selector */}
+      <div className="flex items-center justify-between mb-4">
+        <Label className="text-sm text-muted-foreground">Select Currency:</Label>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </div>
+
       {/* Input Fields */}
       <div className="space-y-4 mb-6">
         <div>
-          <Label htmlFor="principal" className="mb-2 block">Principal Amount (₹)</Label>
+          <Label htmlFor="principal" className="mb-2 block">Principal Amount ({symbol})</Label>
           <Input id="principal" type="number" value={principal} onChange={(e) => setPrincipal(e.target.value)} placeholder="e.g., 50000" className="calc-input" />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -109,11 +111,11 @@ Total Amount = ₹50,000 + ₹12,000 = ₹62,000`}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="text-center p-4 bg-background rounded-lg">
               <p className="text-sm text-muted-foreground mb-1">Interest Earned</p>
-              <p className="text-2xl font-bold text-success">{formatCurrency(result.interest)}</p>
+              <p className="text-2xl font-bold text-success">{formatCurrency(result.interest, currency)}</p>
             </div>
             <div className="text-center p-4 bg-background rounded-lg border-2 border-primary">
               <p className="text-sm text-muted-foreground mb-1">Total Amount</p>
-              <p className="text-2xl font-bold text-primary">{formatCurrency(result.total)}</p>
+              <p className="text-2xl font-bold text-primary">{formatCurrency(result.total, currency)}</p>
             </div>
           </div>
         </div>

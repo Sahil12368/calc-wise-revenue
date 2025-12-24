@@ -4,11 +4,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import CalculatorLayout from '@/components/calculator/CalculatorLayout';
+import CurrencySelector, { Currency, formatCurrency, getCurrencySymbol } from '@/components/calculator/CurrencySelector';
 import { getCalculatorById } from '@/lib/calculators';
 
 const CompoundInterestCalculator = () => {
   const calculator = getCalculatorById('compound-interest')!;
   
+  const [currency, setCurrency] = useState<Currency>('INR');
   const [principal, setPrincipal] = useState('');
   const [rate, setRate] = useState('');
   const [time, setTime] = useState('');
@@ -54,13 +56,7 @@ const CompoundInterestCalculator = () => {
     setError('');
   };
 
-  const formatCurrency = (num: number) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      maximumFractionDigits: 2,
-    }).format(num);
-  };
+  const symbol = getCurrencySymbol(currency);
 
   return (
     <CalculatorLayout
@@ -94,10 +90,16 @@ Interest Earned: ₹64,530.89`}
         },
       ]}
     >
+      {/* Currency Selector */}
+      <div className="flex items-center justify-between mb-4">
+        <Label className="text-sm text-muted-foreground">Select Currency:</Label>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </div>
+
       {/* Input Fields */}
       <div className="space-y-4 mb-6">
         <div>
-          <Label htmlFor="principal" className="mb-2 block">Principal Amount (₹)</Label>
+          <Label htmlFor="principal" className="mb-2 block">Principal Amount ({symbol})</Label>
           <Input id="principal" type="number" value={principal} onChange={(e) => setPrincipal(e.target.value)} placeholder="e.g., 100000" className="calc-input" />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -136,23 +138,23 @@ Interest Earned: ₹64,530.89`}
         <div className="calc-result animate-scale-in">
           <div className="text-center mb-6">
             <p className="text-sm text-muted-foreground mb-2">Final Amount</p>
-            <p className="calc-result-value">{formatCurrency(result.amount)}</p>
+            <p className="calc-result-value">{formatCurrency(result.amount, currency)}</p>
           </div>
           
           <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border">
             <div className="text-center p-3 bg-background rounded-lg">
               <p className="text-xs text-muted-foreground mb-1">Compound Interest</p>
-              <p className="text-lg font-bold text-success">{formatCurrency(result.interest)}</p>
+              <p className="text-lg font-bold text-success">{formatCurrency(result.interest, currency)}</p>
             </div>
             <div className="text-center p-3 bg-background rounded-lg">
               <p className="text-xs text-muted-foreground mb-1">If Simple Interest</p>
-              <p className="text-lg font-bold text-muted-foreground">{formatCurrency(result.simple)}</p>
+              <p className="text-lg font-bold text-muted-foreground">{formatCurrency(result.simple, currency)}</p>
             </div>
           </div>
           
           <div className="mt-4 pt-4 border-t border-border">
             <p className="text-sm text-center text-muted-foreground">
-              You earn <span className="text-success font-semibold">{formatCurrency(result.interest - result.simple)}</span> more with compound interest!
+              You earn <span className="text-success font-semibold">{formatCurrency(result.interest - result.simple, currency)}</span> more with compound interest!
             </p>
           </div>
         </div>

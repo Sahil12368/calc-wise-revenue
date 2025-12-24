@@ -3,11 +3,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import CalculatorLayout from '@/components/calculator/CalculatorLayout';
+import CurrencySelector, { Currency, formatCurrency, getCurrencySymbol } from '@/components/calculator/CurrencySelector';
 import { getCalculatorById } from '@/lib/calculators';
 
 const SavingsGoalCalculator = () => {
   const calculator = getCalculatorById('savings-goal')!;
   
+  const [currency, setCurrency] = useState<Currency>('INR');
   const [goalAmount, setGoalAmount] = useState('');
   const [currentSavings, setCurrentSavings] = useState('');
   const [months, setMonths] = useState('');
@@ -64,13 +66,7 @@ const SavingsGoalCalculator = () => {
     setError('');
   };
 
-  const formatCurrency = (num: number) => {
-    return new Intl.NumberFormat('en-IN', {
-      style: 'currency',
-      currency: 'INR',
-      maximumFractionDigits: 0,
-    }).format(num);
-  };
+  const symbol = getCurrencySymbol(currency);
 
   return (
     <CalculatorLayout
@@ -102,14 +98,20 @@ Monthly savings needed: ≈₹17,500/month`}
         },
       ]}
     >
+      {/* Currency Selector */}
+      <div className="flex items-center justify-between mb-4">
+        <Label className="text-sm text-muted-foreground">Select Currency:</Label>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </div>
+
       {/* Input Fields */}
       <div className="space-y-4 mb-6">
         <div>
-          <Label htmlFor="goalAmount" className="mb-2 block">Savings Goal (₹)</Label>
+          <Label htmlFor="goalAmount" className="mb-2 block">Savings Goal ({symbol})</Label>
           <Input id="goalAmount" type="number" value={goalAmount} onChange={(e) => setGoalAmount(e.target.value)} placeholder="e.g., 500000" className="calc-input" />
         </div>
         <div>
-          <Label htmlFor="currentSavings" className="mb-2 block">Current Savings (₹) - Optional</Label>
+          <Label htmlFor="currentSavings" className="mb-2 block">Current Savings ({symbol}) - Optional</Label>
           <Input id="currentSavings" type="number" value={currentSavings} onChange={(e) => setCurrentSavings(e.target.value)} placeholder="e.g., 50000" className="calc-input" />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -137,19 +139,19 @@ Monthly savings needed: ≈₹17,500/month`}
         <div className="calc-result animate-scale-in">
           <div className="text-center mb-6">
             <p className="text-sm text-muted-foreground mb-2">Save Monthly</p>
-            <p className="calc-result-value">{formatCurrency(result.monthlySavings)}</p>
+            <p className="calc-result-value">{formatCurrency(result.monthlySavings, currency)}</p>
           </div>
           
           {result.interestEarned > 0 && (
             <div className="text-center p-4 bg-success-light rounded-lg mb-4">
               <p className="text-sm text-muted-foreground">Interest will contribute</p>
-              <p className="text-xl font-bold text-success">{formatCurrency(result.interestEarned)}</p>
+              <p className="text-xl font-bold text-success">{formatCurrency(result.interestEarned, currency)}</p>
             </div>
           )}
           
           <div className="p-4 bg-background rounded-lg text-center">
             <p className="text-sm text-muted-foreground">Total you'll save (excluding interest)</p>
-            <p className="text-lg font-semibold text-foreground">{formatCurrency(result.totalSaved)}</p>
+            <p className="text-lg font-semibold text-foreground">{formatCurrency(result.totalSaved, currency)}</p>
           </div>
         </div>
       )}

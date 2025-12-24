@@ -3,11 +3,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import CalculatorLayout from '@/components/calculator/CalculatorLayout';
+import CurrencySelector, { Currency, formatCurrency, getCurrencySymbol } from '@/components/calculator/CurrencySelector';
 import { getCalculatorById } from '@/lib/calculators';
 
 const RetirementCalculator = () => {
   const calculator = getCalculatorById('retirement')!;
   
+  const [currency, setCurrency] = useState<Currency>('USD');
   const [currentAge, setCurrentAge] = useState('');
   const [retirementAge, setRetirementAge] = useState('');
   const [currentSavings, setCurrentSavings] = useState('');
@@ -48,6 +50,8 @@ const RetirementCalculator = () => {
     setResult(null);
   };
 
+  const symbol = getCurrencySymbol(currency);
+
   return (
     <CalculatorLayout
       calculator={calculator}
@@ -62,6 +66,12 @@ const RetirementCalculator = () => {
         { question: 'When should I start saving?', answer: 'The earlier the better! Starting at 25 vs 35 can nearly double your retirement savings due to compound interest.' },
       ]}
     >
+      {/* Currency Selector */}
+      <div className="flex items-center justify-between mb-4">
+        <Label className="text-sm text-muted-foreground">Select Currency:</Label>
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
         <div>
           <Label htmlFor="currentAge" className="mb-2 block">Current Age</Label>
@@ -72,11 +82,11 @@ const RetirementCalculator = () => {
           <Input id="retirementAge" type="number" value={retirementAge} onChange={(e) => setRetirementAge(e.target.value)} placeholder="65" className="calc-input" />
         </div>
         <div>
-          <Label htmlFor="currentSavings" className="mb-2 block">Current Savings ($)</Label>
+          <Label htmlFor="currentSavings" className="mb-2 block">Current Savings ({symbol})</Label>
           <Input id="currentSavings" type="number" value={currentSavings} onChange={(e) => setCurrentSavings(e.target.value)} placeholder="10000" className="calc-input" />
         </div>
         <div>
-          <Label htmlFor="monthlyContribution" className="mb-2 block">Monthly Contribution ($)</Label>
+          <Label htmlFor="monthlyContribution" className="mb-2 block">Monthly Contribution ({symbol})</Label>
           <Input id="monthlyContribution" type="number" value={monthlyContribution} onChange={(e) => setMonthlyContribution(e.target.value)} placeholder="500" className="calc-input" />
         </div>
         <div>
@@ -95,15 +105,15 @@ const RetirementCalculator = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
             <div>
               <p className="text-sm text-muted-foreground mb-1">Retirement Savings</p>
-              <p className="calc-result-value">${result.total.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p>
+              <p className="calc-result-value">{formatCurrency(result.total, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Total Contributions</p>
-              <p className="text-2xl font-bold text-foreground">${result.contributions.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p>
+              <p className="text-2xl font-bold text-foreground">{formatCurrency(result.contributions, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Interest Earned</p>
-              <p className="text-2xl font-bold text-foreground">${result.interest.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p>
+              <p className="text-2xl font-bold text-foreground">{formatCurrency(result.interest, currency)}</p>
             </div>
           </div>
         </div>
