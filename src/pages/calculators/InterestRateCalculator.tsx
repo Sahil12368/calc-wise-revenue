@@ -4,10 +4,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import CalculatorLayout from '@/components/calculator/CalculatorLayout';
 import { getCalculatorById } from '@/lib/calculators';
+import CurrencySelector, { Currency, formatCurrency, getCurrencySymbol } from '@/components/calculator/CurrencySelector';
 
 const InterestRateCalculator = () => {
   const calculator = getCalculatorById('interest-rate')!;
   
+  const [currency, setCurrency] = useState<Currency>('USD');
   const [principal, setPrincipal] = useState('');
   const [finalAmount, setFinalAmount] = useState('');
   const [years, setYears] = useState('');
@@ -49,13 +51,17 @@ const InterestRateCalculator = () => {
         { question: 'What affects actual returns?', answer: 'Investment type, market conditions, fees, taxes, and compounding frequency all affect your actual returns.' },
       ]}
     >
+      <div className="flex justify-end mb-4">
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <div>
-          <Label htmlFor="principal" className="mb-2 block">Starting Amount ($)</Label>
+          <Label htmlFor="principal" className="mb-2 block">Starting Amount ({getCurrencySymbol(currency)})</Label>
           <Input id="principal" type="number" value={principal} onChange={(e) => setPrincipal(e.target.value)} placeholder="10000" className="calc-input" />
         </div>
         <div>
-          <Label htmlFor="finalAmount" className="mb-2 block">Target Amount ($)</Label>
+          <Label htmlFor="finalAmount" className="mb-2 block">Target Amount ({getCurrencySymbol(currency)})</Label>
           <Input id="finalAmount" type="number" value={finalAmount} onChange={(e) => setFinalAmount(e.target.value)} placeholder="15000" className="calc-input" />
         </div>
         <div>
@@ -78,7 +84,7 @@ const InterestRateCalculator = () => {
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Total Interest Earned</p>
-              <p className="text-2xl font-bold text-foreground">${result.totalInterest.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-foreground">{formatCurrency(result.totalInterest, currency)}</p>
             </div>
           </div>
         </div>

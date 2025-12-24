@@ -4,10 +4,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import CalculatorLayout from '@/components/calculator/CalculatorLayout';
 import { getCalculatorById } from '@/lib/calculators';
+import CurrencySelector, { Currency, formatCurrency, getCurrencySymbol } from '@/components/calculator/CurrencySelector';
 
 const SalesTaxCalculator = () => {
   const calculator = getCalculatorById('sales-tax')!;
   
+  const [currency, setCurrency] = useState<Currency>('USD');
   const [price, setPrice] = useState('');
   const [taxRate, setTaxRate] = useState('');
   const [mode, setMode] = useState<'add' | 'extract'>('add');
@@ -50,25 +52,28 @@ const SalesTaxCalculator = () => {
         { question: 'Are all items taxable?', answer: 'No, many states exempt groceries, medicine, and clothing from sales tax. Rules vary by location.' },
       ]}
     >
-      <div className="flex flex-wrap gap-2 mb-6">
-        <Button
-          variant={mode === 'add' ? 'default' : 'outline'}
-          onClick={() => { setMode('add'); reset(); }}
-        >
-          Add Tax to Price
-        </Button>
-        <Button
-          variant={mode === 'extract' ? 'default' : 'outline'}
-          onClick={() => { setMode('extract'); reset(); }}
-        >
-          Extract Tax from Total
-        </Button>
+      <div className="flex justify-between items-center mb-4">
+        <div className="flex flex-wrap gap-2">
+          <Button
+            variant={mode === 'add' ? 'default' : 'outline'}
+            onClick={() => { setMode('add'); reset(); }}
+          >
+            Add Tax to Price
+          </Button>
+          <Button
+            variant={mode === 'extract' ? 'default' : 'outline'}
+            onClick={() => { setMode('extract'); reset(); }}
+          >
+            Extract Tax from Total
+          </Button>
+        </div>
+        <CurrencySelector value={currency} onChange={setCurrency} />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
         <div>
           <Label htmlFor="price" className="mb-2 block">
-            {mode === 'add' ? 'Price Before Tax ($)' : 'Total Price ($)'}
+            {mode === 'add' ? `Price Before Tax (${getCurrencySymbol(currency)})` : `Total Price (${getCurrencySymbol(currency)})`}
           </Label>
           <Input id="price" type="number" value={price} onChange={(e) => setPrice(e.target.value)} placeholder="100" className="calc-input" />
         </div>
@@ -88,15 +93,15 @@ const SalesTaxCalculator = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
             <div>
               <p className="text-sm text-muted-foreground mb-1">Price Before Tax</p>
-              <p className="text-2xl font-bold text-foreground">${result.beforeTax.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-foreground">{formatCurrency(result.beforeTax, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Sales Tax</p>
-              <p className="text-2xl font-bold text-foreground">${result.tax.toFixed(2)}</p>
+              <p className="text-2xl font-bold text-foreground">{formatCurrency(result.tax, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Total</p>
-              <p className="calc-result-value">${result.total.toFixed(2)}</p>
+              <p className="calc-result-value">{formatCurrency(result.total, currency)}</p>
             </div>
           </div>
         </div>
