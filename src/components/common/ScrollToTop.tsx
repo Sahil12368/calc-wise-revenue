@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const ScrollToTop = () => {
-  const { pathname } = useLocation();
+  const location = useLocation();
 
   useEffect(() => {
     // Temporarily disable smooth scroll for instant scroll
@@ -21,7 +21,7 @@ const ScrollToTop = () => {
     }, 100);
 
     return () => clearTimeout(timer);
-  }, [pathname]);
+  }, [location.key]);
 
   return null;
 };
