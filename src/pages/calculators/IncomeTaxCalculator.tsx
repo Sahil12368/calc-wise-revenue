@@ -5,10 +5,12 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import CalculatorLayout from '@/components/calculator/CalculatorLayout';
 import { getCalculatorById } from '@/lib/calculators';
+import CurrencySelector, { Currency, formatCurrency, getCurrencySymbol } from '@/components/calculator/CurrencySelector';
 
 const IncomeTaxCalculator = () => {
   const calculator = getCalculatorById('income-tax')!;
   
+  const [currency, setCurrency] = useState<Currency>('USD');
   const [income, setIncome] = useState('');
   const [filingStatus, setFilingStatus] = useState('single');
   const [deductions, setDeductions] = useState('');
@@ -87,9 +89,13 @@ const IncomeTaxCalculator = () => {
         { question: 'Is this my actual tax bill?', answer: 'This is an estimate. Actual taxes depend on many factors including credits, other income, and state taxes.' },
       ]}
     >
+      <div className="flex justify-end mb-4">
+        <CurrencySelector value={currency} onChange={setCurrency} />
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <div>
-          <Label htmlFor="income" className="mb-2 block">Annual Income ($)</Label>
+          <Label htmlFor="income" className="mb-2 block">Annual Income ({getCurrencySymbol(currency)})</Label>
           <Input id="income" type="number" value={income} onChange={(e) => setIncome(e.target.value)} placeholder="75000" className="calc-input" />
         </div>
         <div>
@@ -105,7 +111,7 @@ const IncomeTaxCalculator = () => {
           </Select>
         </div>
         <div>
-          <Label htmlFor="deductions" className="mb-2 block">Itemized Deductions ($)</Label>
+          <Label htmlFor="deductions" className="mb-2 block">Itemized Deductions ({getCurrencySymbol(currency)})</Label>
           <Input id="deductions" type="number" value={deductions} onChange={(e) => setDeductions(e.target.value)} placeholder="0" className="calc-input" />
         </div>
       </div>
@@ -120,11 +126,11 @@ const IncomeTaxCalculator = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             <div>
               <p className="text-sm text-muted-foreground mb-1">Taxable Income</p>
-              <p className="text-xl font-bold text-foreground">${result.taxableIncome.toLocaleString()}</p>
+              <p className="text-xl font-bold text-foreground">{formatCurrency(result.taxableIncome, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Estimated Tax</p>
-              <p className="calc-result-value text-2xl">${result.tax.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p>
+              <p className="calc-result-value text-2xl">{formatCurrency(result.tax, currency)}</p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">Effective Rate</p>
@@ -132,7 +138,7 @@ const IncomeTaxCalculator = () => {
             </div>
             <div>
               <p className="text-sm text-muted-foreground mb-1">After-Tax Income</p>
-              <p className="text-xl font-bold text-foreground">${result.afterTax.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p>
+              <p className="text-xl font-bold text-foreground">{formatCurrency(result.afterTax, currency)}</p>
             </div>
           </div>
         </div>
