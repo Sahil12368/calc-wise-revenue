@@ -89,7 +89,7 @@ const Navbar = () => {
                   variant="ghost"
                   className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground"
                 >
-                  Categories <ChevronDown className="ml-1 h-4 w-4" />
+                  Categories <ChevronDown className="ml-1 h-4 w-4 pointer-events-none" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start" className="w-56">
