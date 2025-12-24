@@ -65,6 +65,28 @@ const RetirementCalculator = () => {
         { question: 'What return rate should I expect?', answer: 'Historically, the stock market has averaged about 7-10% annually. A conservative estimate is 6-7% after inflation.' },
         { question: 'When should I start saving?', answer: 'The earlier the better! Starting at 25 vs 35 can nearly double your retirement savings due to compound interest.' },
       ]}
+      contentSections={[
+        {
+          title: 'What is a Retirement Calculator?',
+          content: 'A retirement calculator helps you estimate how much money you will have saved by the time you retire. By inputting your current age, retirement age, existing savings, and monthly contributions, you can see how your nest egg will grow over time.\n\nThis tool is essential for retirement planning, helping you determine if you are on track to meet your goals or need to adjust your savings rate.',
+        },
+        {
+          title: 'How to Use This Calculator',
+          content: '1. Enter your current age\n2. Enter your planned retirement age\n3. Enter your current retirement savings\n4. Enter how much you can save monthly\n5. Enter your expected annual return rate\n6. Click "Calculate" to see your projected savings\n\nThe calculator shows your total at retirement, how much you contributed, and how much came from investment growth.',
+        },
+        {
+          title: 'How Much Do You Need to Retire?',
+          content: 'Common rules of thumb:\n\n• 25x Rule: Save 25 times your annual expenses. At 4% withdrawal, this lasts indefinitely.\n• 70-80% Rule: Plan to replace 70-80% of pre-retirement income.\n• Age-based milestones:\n  - By 30: 1x annual salary saved\n  - By 40: 3x annual salary saved\n  - By 50: 6x annual salary saved\n  - By 60: 8x annual salary saved\n  - By 67: 10x annual salary saved',
+        },
+        {
+          title: 'The Power of Starting Early',
+          content: 'Time is the most powerful factor in retirement savings:\n\nSaving $500/month at 7% annual return:\n• Start at 25, retire at 65: $1,199,122\n• Start at 35, retire at 65: $566,764\n• Start at 45, retire at 65: $248,587\n\nStarting 10 years earlier more than doubles your retirement savings! Every year you delay costs you significantly.',
+        },
+        {
+          title: 'Retirement Account Types',
+          content: '• 401(k)/403(b): Employer-sponsored, often with matching contributions. Tax-deferred growth.\n\n• Traditional IRA: Tax-deductible contributions, taxed at withdrawal.\n\n• Roth IRA: Contributions after-tax, but withdrawals are tax-free.\n\n• Pension: Defined benefit plan, becoming less common.\n\n• Social Security: Government benefit, should supplement—not replace—savings.\n\nMaximize employer matching first—it is free money!',
+        },
+      ]}
     >
       {/* Currency Selector */}
       <div className="flex items-center justify-between mb-4">

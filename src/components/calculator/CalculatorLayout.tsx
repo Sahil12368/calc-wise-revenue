@@ -18,6 +18,11 @@ interface FAQ {
   answer: string;
 }
 
+interface ContentSection {
+  title: string;
+  content: string;
+}
+
 interface CalculatorLayoutProps {
   calculator: Calculator;
   title: string;
@@ -27,6 +32,7 @@ interface CalculatorLayoutProps {
   formula?: string;
   example?: string;
   faqs: FAQ[];
+  contentSections?: ContentSection[];
 }
 
 const CalculatorLayout = ({
@@ -38,6 +44,7 @@ const CalculatorLayout = ({
   formula,
   example,
   faqs,
+  contentSections = [],
 }: CalculatorLayoutProps) => {
   const relatedCalculators = getRelatedCalculators(calculator.id);
   const category = categoryInfo[calculator.category];
@@ -108,6 +115,20 @@ const CalculatorLayout = ({
 
             {/* In-Content Ad */}
             <AdPlacement type="in-content" className="mb-6" />
+
+            {/* Content Sections */}
+            {contentSections.length > 0 && contentSections.map((section, index) => (
+              <Card key={index} className="mb-6">
+                <CardContent className="p-6">
+                  <h2 className="text-xl font-semibold text-foreground mb-3">
+                    {section.title}
+                  </h2>
+                  <div className="text-muted-foreground whitespace-pre-line leading-relaxed">
+                    {section.content}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
 
             {/* FAQs */}
             {faqs.length > 0 && (

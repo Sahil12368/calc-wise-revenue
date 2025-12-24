@@ -83,6 +83,24 @@ So, 25% of 200 is 50.`}
           answer: 'Subtract the old value from the new value, divide by the old value, and multiply by 100. A positive result means increase, negative means decrease.',
         },
       ]}
+      contentSections={[
+        {
+          title: 'What is a Percentage?',
+          content: 'A percentage is a way of expressing a number as a fraction of 100. The word "percent" comes from the Latin "per centum," meaning "by the hundred." Percentages are used everywhere in daily life—from discounts and taxes to grades and statistics.\n\nUnderstanding percentages helps you make informed decisions about finances, compare values, and interpret data in reports and news articles.',
+        },
+        {
+          title: 'How to Use This Calculator',
+          content: 'This calculator offers three modes:\n\n1. What is X% of Y? - Find a percentage of any number (e.g., calculate tips, discounts, tax)\n\n2. X is what % of Y? - Find what percentage one number is of another (e.g., test scores, completion rates)\n\n3. % Change from X to Y - Calculate the percentage increase or decrease between two values (e.g., price changes, growth rates)\n\nSimply select your mode, enter the values, and click Calculate.',
+        },
+        {
+          title: 'Common Uses for Percentages',
+          content: '• Shopping: Calculate discounts and final prices (20% off $80 = $64)\n• Taxes: Determine tax amounts on purchases or income\n• Tips: Calculate restaurant tips (15-20% of the bill)\n• Grades: Convert scores to percentages\n• Finance: Interest rates, investment returns, loan APR\n• Statistics: Survey results, probability, data analysis\n• Business: Profit margins, growth rates, market share',
+        },
+        {
+          title: 'Percentage Formulas Explained',
+          content: 'Finding X% of Y:\nResult = (X ÷ 100) × Y\nExample: 25% of 200 = (25 ÷ 100) × 200 = 0.25 × 200 = 50\n\nFinding what % X is of Y:\nResult = (X ÷ Y) × 100\nExample: 45 is what % of 180? = (45 ÷ 180) × 100 = 25%\n\nPercentage Change:\nResult = ((New - Old) ÷ Old) × 100\nExample: Price went from $50 to $65 = ((65-50) ÷ 50) × 100 = 30% increase',
+        },
+      ]}
     >
       {/* Mode Selector */}
       <div className="flex flex-wrap gap-2 mb-6">

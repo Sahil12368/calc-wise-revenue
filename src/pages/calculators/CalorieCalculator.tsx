@@ -105,6 +105,28 @@ For weight loss: 2556 - 500 = 2056 calories/day`}
           answer: 'A safe rate is 0.5-1 kg (1-2 lbs) per week. This requires a deficit of 500-1000 calories daily. Faster weight loss can lead to muscle loss.',
         },
       ]}
+      contentSections={[
+        {
+          title: 'What is a Calorie Calculator?',
+          content: 'A calorie calculator estimates the number of calories your body needs each day based on your physical characteristics and activity level. It uses scientifically validated formulas to calculate your Basal Metabolic Rate (BMR) and Total Daily Energy Expenditure (TDEE).\n\nKnowing your calorie needs is essential for managing weight, whether you want to lose, maintain, or gain weight in a healthy way.',
+        },
+        {
+          title: 'How to Use This Calculator',
+          content: '1. Select your gender (affects metabolic rate)\n2. Enter your age, height (cm), and weight (kg)\n3. Select your activity level from sedentary to very active\n4. Choose your goal: lose, maintain, or gain weight\n5. Click "Calculate" to see your personalized calorie targets\n\nThe calculator shows both your maintenance calories and target calories based on your goal.',
+        },
+        {
+          title: 'Understanding BMR and TDEE',
+          content: 'BMR (Basal Metabolic Rate): The calories your body burns at complete rest just to maintain vital functions like breathing, circulation, and cell production. This accounts for 60-75% of daily calorie burn.\n\nTDEE (Total Daily Energy Expenditure): Your BMR plus calories burned through all daily activities and exercise. This is your true daily calorie need.\n\nTo lose weight, eat below TDEE. To gain weight, eat above TDEE.',
+        },
+        {
+          title: 'Activity Level Guidelines',
+          content: '• Sedentary: Desk job, little to no exercise\n• Light: Light exercise 1-3 days per week\n• Moderate: Moderate exercise 3-5 days per week\n• Active: Hard exercise 6-7 days per week\n• Very Active: Hard daily exercise or physical job\n\nBe honest about your activity level for accurate results. Most people overestimate their activity.',
+        },
+        {
+          title: 'Safe Weight Management Tips',
+          content: '• Aim for 0.5-1 kg (1-2 lbs) weight loss per week\n• Never eat below 1200 calories (women) or 1500 (men) without medical supervision\n• Combine calorie control with regular exercise\n• Track your food intake for better awareness\n• Adjust calories based on actual progress over 2-4 weeks\n• Focus on nutrient-dense foods, not just calories\n• Stay hydrated—sometimes thirst mimics hunger',
+        },
+      ]}
     >
       {/* Input Fields */}
       <div className="space-y-4 mb-6">

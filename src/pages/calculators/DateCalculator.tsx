@@ -55,6 +55,24 @@ const DateCalculator = () => {
         { question: 'Can I calculate weeks instead of days?', answer: 'Yes, just multiply weeks by 7. For example, 2 weeks = 14 days.' },
         { question: 'What date format should I use?', answer: 'Use the date picker or enter in YYYY-MM-DD format (e.g., 2024-01-15).' },
       ]}
+      contentSections={[
+        {
+          title: 'What is a Date Calculator?',
+          content: 'A date calculator is a tool that helps you add or subtract a specific number of days from any given date. It takes into account all calendar complexities including leap years, varying month lengths (28, 29, 30, or 31 days), and century boundaries.\n\nThis tool is invaluable for planning events, calculating deadlines, determining due dates, and any situation where you need to know what date falls a certain number of days before or after a specific date.',
+        },
+        {
+          title: 'How to Use This Calculator',
+          content: '1. Enter your starting date using the date picker\n2. Enter the number of days you want to add or subtract\n3. Click "Add Days" or "Subtract Days" to select the operation\n4. Click "Calculate" to see the resulting date\n\nThe result will show the full date including the day of the week, making it easy to plan around weekends and holidays.',
+        },
+        {
+          title: 'Common Uses for Date Calculations',
+          content: '• Project Management: Calculate project deadlines and milestones\n• Legal Deadlines: Determine filing dates, notice periods, or statute of limitations\n• Medical: Track medication schedules, follow-up appointments\n• Finance: Calculate loan maturity dates, payment due dates\n• Travel: Plan trip durations and return dates\n• Pregnancy: Calculate due dates and trimester milestones\n• Contracts: Determine notice periods, warranty expiration\n• Personal: Birthday countdowns, anniversary planning',
+        },
+        {
+          title: 'Tips for Date Calculations',
+          content: '• For weeks: Multiply the number of weeks by 7\n• For months: Note that months vary (28-31 days), so use approximate values like 30 days\n• For years: Use 365 days (or 366 for leap years)\n• Remember time zones may affect the actual date in different locations\n• For recurring events, calculate from the most recent occurrence',
+        },
+      ]}
     >
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
         <div>

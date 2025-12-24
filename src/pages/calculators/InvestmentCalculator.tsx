@@ -56,6 +56,28 @@ const InvestmentCalculator = () => {
         { question: 'How does contribution timing affect returns?', answer: 'Earlier contributions have more time to compound, so starting early is more powerful than increasing contributions later.' },
         { question: 'What return rate should I use?', answer: 'Stock market historical average is 7-10%. Use a conservative estimate of 6-8% for long-term planning.' },
       ]}
+      contentSections={[
+        {
+          title: 'What is an Investment Calculator?',
+          content: 'An investment calculator helps you project the future value of your investments based on initial investment, regular contributions, expected returns, and time horizon. It uses the power of compound growth to show how your money can grow over time.\n\nThis tool is essential for setting realistic financial goals, planning for retirement, or understanding how different investment strategies compare.',
+        },
+        {
+          title: 'How to Use This Calculator',
+          content: '1. Enter your initial investment (lump sum to start with)\n2. Enter your monthly contribution (regular additions)\n3. Enter your expected annual return rate\n4. Enter your investment time period in years\n5. Click "Calculate" to see projected growth\n\nYou can leave the initial investment at zero if you are only making monthly contributions, or vice versa.',
+        },
+        {
+          title: 'Understanding Investment Returns',
+          content: 'Historical average returns by asset class:\n\n• Stocks (Equity): 8-12% annually (higher risk)\n• Bonds: 4-6% annually (lower risk)\n• Real Estate: 8-10% (varies by market)\n• Fixed Deposits: 5-7% (low risk)\n• Money Market: 2-4% (very low risk)\n\nRemember: Higher potential returns come with higher risk. Diversification helps balance risk and reward.',
+        },
+        {
+          title: 'The Impact of Time',
+          content: 'Time is your greatest ally in investing due to compound growth:\n\n• Starting at 25 vs 35 with $500/month at 8%:\n  - Start at 25: $1,745,504 by age 65\n  - Start at 35: $745,180 by age 65\n\nStarting just 10 years earlier more than doubles your final amount! This is why "time in the market" beats "timing the market."',
+        },
+        {
+          title: 'Investment Strategies',
+          content: '• Dollar-Cost Averaging: Invest fixed amounts regularly regardless of market conditions. Reduces timing risk.\n\n• Lump Sum: Invest a large amount at once. Historically outperforms DCA in rising markets.\n\n• Diversification: Spread investments across asset classes to reduce risk.\n\n• Rebalancing: Periodically adjust portfolio to maintain target allocation.',
+        },
+      ]}
     >
       {/* Currency Selector */}
       <div className="flex items-center justify-between mb-4">
