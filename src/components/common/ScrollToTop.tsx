@@ -1,29 +1,51 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const ScrollToTop = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // Temporarily disable smooth scroll for instant scroll
+    // ISSUE (real mobile browsers): an immediate scrollTo during navigation can be ignored,
+    // especially with smooth-scroll CSS. We force "auto" and retry on the real scrolling element.
     const html = document.documentElement;
+    const scrollEl = document.scrollingElement ?? html;
+
     const originalScrollBehavior = html.style.scrollBehavior;
-    html.style.scrollBehavior = 'auto';
+    html.style.scrollBehavior = "auto";
 
-    // Multiple fallback methods for mobile compatibility
-    window.scrollTo(0, 0);
-    html.scrollTop = 0;
-    document.body.scrollTop = 0;
+    const scrollNow = () => {
+      (document.activeElement as HTMLElement | null)?.blur?.();
+      scrollEl.scrollTop = 0;
+      document.body.scrollTop = 0; // iOS Safari fallback
+      window.scrollTo(0, 0);
+    };
 
-    // Restore smooth scroll after a short delay
-    const timer = setTimeout(() => {
+    scrollNow();
+
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      scrollNow();
+      raf2 = requestAnimationFrame(scrollNow);
+    });
+
+    const t1 = window.setTimeout(scrollNow, 50);
+    const t2 = window.setTimeout(scrollNow, 150);
+    const restore = window.setTimeout(() => {
       html.style.scrollBehavior = originalScrollBehavior;
-    }, 100);
+    }, 200);
 
-    return () => clearTimeout(timer);
+    return () => {
+      cancelAnimationFrame(raf1);
+      if (raf2) cancelAnimationFrame(raf2);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(restore);
+      html.style.scrollBehavior = originalScrollBehavior;
+    };
   }, [location.key]);
 
   return null;
 };
 
 export default ScrollToTop;
+
